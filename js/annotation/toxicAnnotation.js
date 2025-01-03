@@ -44,6 +44,17 @@ export default class ToxicAnnotation extends Annotation {
     });
   }
 
+  afterLoad() {
+    document.getElementById('search-bar').disabled = false;
+    this.handleInput(
+      'This example does not give a damn.',
+      '',
+      'manualInput',
+      0,
+      1,
+    );
+  }
+
   startWorkers() {
     if (this.worker !== null) {
       this.worker.terminate();
@@ -159,7 +170,7 @@ export default class ToxicAnnotation extends Annotation {
       'output-result-classify',
     );
 
-    let outMsg = '<strong>Predicted Stars</strong>: ';
+    let outMsg = '<strong>Predicted Labels</strong>: ';
 
     for (let i = 0; i < dt.output.length; i++) {
       outMsg += `<span class="has-text-success">${dt.output[i].label}</span> `;

@@ -46,6 +46,20 @@ export default class StarsAnnotation extends Annotation {
 
   afterLoad() {
     document.getElementById('search-bar').disabled = false;
+    this.handleInput(
+      'Do not waste your money on this show.',
+      '',
+      'manualInput',
+      0,
+      2,
+    );
+    this.handleInput(
+      'This is the best movie I have ever seen!',
+      '',
+      'manualInput',
+      1,
+      2,
+    );
   }
 
   startWorkers() {

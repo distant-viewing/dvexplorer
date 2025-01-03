@@ -47,11 +47,18 @@ export default class SentimentAnnotation extends Annotation {
   afterLoad() {
     document.getElementById('search-bar').disabled = false;
     this.handleInput(
-      'test',
+      'This is a great example!',
       '',
       'manualInput',
       0,
+      2,
+    );
+    this.handleInput(
+      'This is a terrible example!',
+      '',
+      'manualInput',
       1,
+      2,
     );
   }
 

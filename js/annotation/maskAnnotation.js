@@ -46,6 +46,13 @@ export default class ClassifyAnnotation extends Annotation {
 
   afterLoad() {
     document.getElementById('search-bar').disabled = false;
+    this.handleInput(
+      'The secret to life is [MASK]!',
+      '',
+      'manualInput',
+      0,
+      1,
+    );
   }
 
   startWorkers() {
