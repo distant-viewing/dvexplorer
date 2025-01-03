@@ -1,0 +1,4 @@
+{
+  "short": "<p>The goal of object detection is to find, and usually locate with a box, objects within an image that come from pre-determined set of classes. The Microsoft COCO example dataset gives a good idea of the kind of data the model was trained with. Try to test it with a variety of different inputs and see how well (or not) it does!<\/p>",
+  "long": "<p>Longer description.<\/p>"
+}

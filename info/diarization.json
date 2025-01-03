@@ -1,0 +1,4 @@
+{
+  "short": "<p>Diarization is another audio-based annotation. It attempts to identify when different speakers are speaking in an audio recording. It is very useful for studying film and television data, often being paired with the transcription task. Note that the model used here begins to have trouble when the number of speakers is large. The Python code provides some ways of addressing this issue with larger datasets.<\/p>",
+  "long": "<p>Longer description.<\/p>"
+}

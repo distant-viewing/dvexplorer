@@ -1,0 +1,4 @@
+{
+  "short": "<p>For photography, depth estimation is the task of identifying the relatively distance of each pixel in the image away from the camera. We can extend this to other types of images by considering the depths of objects from the perspective of the artist. The output will show the closest pixels in white and the farthest pixels in black. Hoving over the output reveals the original image for comparison. Downloading the results will provide a zipped directory of all the depth-predicted images.<\/p>",
+  "long": "<p>Longer description.<\/p>"
+}

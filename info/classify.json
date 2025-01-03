@@ -1,0 +1,4 @@
+{
+  "short": "<p>The goal of image classfication is to identify a single category from a pre-selected set that describes an image. Outputs provide the top five most likely categories predicted by the model along with probability scores indicating the model’s confidence. Image classification is one of the earliest tasks in computer vision analysis, so it is a good place to get started. Try this with the ILSVRC example dataset as it more closely resembles the kinds of data used to train these models.<\/p>",
+  "long": "<p>Longer description.<\/p>"
+}

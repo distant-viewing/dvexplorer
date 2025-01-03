@@ -1,0 +1,4 @@
+{
+  "short": "<p>Sentiment analysis is the process of assigning a subjective label to a text indicating the affective state or intention of the writer/speaker. We include it here as it can be quite useful when applied to transcriptions as well as movie/television reviews. The model used here provide a simple positive or negative prediction along with a score. Try a variety of example texts and see how the scores align with your own understanding of the data.<\/p>",
+  "long": "<p>Longer description.<\/p>"
+}

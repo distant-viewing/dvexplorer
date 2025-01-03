@@ -1,0 +1,4 @@
+{
+  "short": "<p>Image embeddings are a way to find similarities between to pairs of images (they have other applications as well, as described in the ‘Learn More’ link above). Here, we will run an embedding over a set of images. Then, the visualization on the right will allow you to click on an image and sort the remainder of the collection based on similarity to the selectioned image. Scores at the bottom range from 0 (no similiarity) to 100 (identical). Try any of the large example datasets; they have pre-computed embedings making them fast and easy to experiment with.<\/p>",
+  "long": "<p>Longer description.<\/p>"
+}

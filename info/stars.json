@@ -1,0 +1,4 @@
+{
+  "short": "<p>In addition to positive or negative labels, we can also predict more grainular categories from textual inputs. For looking at viewer responses to visual data, it can be helpful to predict sentiment on a scale from 1-5 as is often down in product reviews. Here, we have a model that assigns percentages to each possible number of stars between 1 and 5.<\/p>",
+  "long": "<p>Longer description.<\/p>"
+}
