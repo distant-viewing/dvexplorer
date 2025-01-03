@@ -46,6 +46,13 @@ export default class SentimentAnnotation extends Annotation {
 
   afterLoad() {
     document.getElementById('search-bar').disabled = false;
+    this.handleInput(
+      'test',
+      '',
+      'manualInput',
+      0,
+      1,
+    );
   }
 
   startWorkers() {
