@@ -51,14 +51,7 @@ export default class SentimentAnnotation extends Annotation {
       '',
       'manualInput',
       0,
-      2,
-    );
-    this.handleInput(
-      'This is a terrible example!',
-      '',
-      'manualInput',
       1,
-      2,
     );
   }
 
@@ -188,6 +181,7 @@ export default class SentimentAnnotation extends Annotation {
   }
 
   handleDownload() {
+    document.getElementById('search-bar').disabled = false;
     document
       .getElementById('annotation-download')
       .addEventListener('click', () => {

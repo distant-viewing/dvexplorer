@@ -47,7 +47,7 @@ export default class ToxicAnnotation extends Annotation {
   afterLoad() {
     document.getElementById('search-bar').disabled = false;
     this.handleInput(
-      'This example does not give a damn.',
+      'This example should not exist.',
       '',
       'manualInput',
       0,
@@ -188,6 +188,7 @@ export default class ToxicAnnotation extends Annotation {
   }
 
   handleDownload() {
+    document.getElementById('search-bar').disabled = false;
     document
       .getElementById('annotation-download')
       .addEventListener('click', () => {

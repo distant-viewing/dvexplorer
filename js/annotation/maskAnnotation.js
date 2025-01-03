@@ -204,6 +204,7 @@ export default class ClassifyAnnotation extends Annotation {
   }
 
   handleDownload() {
+    document.getElementById('search-bar').disabled = false;
     document
       .getElementById('annotation-download')
       .addEventListener('click', () => {
