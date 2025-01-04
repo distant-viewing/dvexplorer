@@ -33,7 +33,7 @@ const buildAnnotationInfo = function () {
 
   const pythonTag = document.createElement('span');
   pythonTag.className = 'tag is-link is-hoverable is-rounded';
-  pythonTag.textContent = 'Python';
+  pythonTag.textContent = 'Script';
   pythonLink.appendChild(pythonTag);
   tagsDiv.appendChild(pythonLink);
 
