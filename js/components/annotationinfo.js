@@ -160,7 +160,7 @@ const buildAnnotationInfo = function () {
   progressContainer.className = 'px-3 pt-1 pb-2 my-4 has-background-white-ter is-max-tablet';
 
   // Create the Model load progress label and progress bar
-  const loadProgressLabel = document.createElement('label');
+  const loadProgressLabel = document.createElement('span');
   //loadProgressLabel.setAttribute('for', 'file');
   loadProgressLabel.className = 'is-code is-progress-label';
   loadProgressLabel.textContent = 'Model load progress:';
@@ -174,7 +174,7 @@ const buildAnnotationInfo = function () {
   progressContainer.appendChild(loadProgress);
 
   // Create the Model run progress label and progress bar
-  const runProgressLabel = document.createElement('label');
+  const runProgressLabel = document.createElement('span');
   //runProgressLabel.setAttribute('for', 'file');
   runProgressLabel.className = 'is-code is-progress-label';
   runProgressLabel.textContent = 'Model run progress:';
@@ -186,6 +186,13 @@ const buildAnnotationInfo = function () {
   runProgress.max = '100';
   runProgress.value = '0';
   progressContainer.appendChild(runProgress);
+
+  // Create the run time
+  const runTimeLabel = document.createElement('span');
+  runTimeLabel.className = 'is-progress-label p-5';
+  runTimeLabel.id = "time-label";
+  runTimeLabel.textContent = '';
+  progressContainer.appendChild(runTimeLabel);
 
   // Add the progress container to annotation info
   annotationInfo.appendChild(progressContainer);

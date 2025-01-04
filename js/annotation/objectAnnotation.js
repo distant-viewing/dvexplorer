@@ -13,6 +13,7 @@ export default class ObjectAnnotation extends Annotation {
   itype = 'image';
   pylink = 'https://distant-viewing.github.io/dv-demo/2.2_object.html';
   dataToDownload = {};
+  exampleNames = null;
 
   constructor() {
     super();
@@ -58,13 +59,15 @@ export default class ObjectAnnotation extends Annotation {
   async handleExample(value) {
     this.dataToDownload = {};
 
-    for (let i = 0; i < value.length; i++) {
+    const imageArray = value.filter((s) => !s.url.endsWith('json'));
+
+    for (let i = 0; i < imageArray.length; i++) {
       this.handleInput(
-        value[i].url,
-        value[i].caption,
-        value[i].url,
+        imageArray[i].url,
+        imageArray[i].caption,
+        imageArray[i].url,
         i,
-        value.length,
+        imageArray.length,
       );
     }
   }
@@ -107,14 +110,6 @@ export default class ObjectAnnotation extends Annotation {
 
     dt.output.forEach((r) => {
       outputImages[dt.input.index].appendChild(renderBox(r));
-
-      // outputImagesImg[dt.input.index].onload = () => {
-      //   console.log(outputImagesImg[dt.input.index].offsetHeight);
-      //   outputImages[dt.input.index].style.height =
-      //     outputImagesImg[dt.input.index].offsetHeight + 'px';
-      //   outputImages[dt.input.index].style.width =
-      //     outputImagesImg[dt.input.index].offsetWidth + 'px';
-      // };
     });
 
     this.dataToDownload[dt.input.fileName] = dt.output;

@@ -21,6 +21,7 @@ export default class ShotboundaryAnnotation extends Annotation {
   itype = 'video';
   pylink = 'https://distant-viewing.github.io/dv-demo/3.1_shot.html';
   dataToDownload = {};
+  exampleNames = null;
 
   constructor() {
     super();
@@ -109,7 +110,7 @@ export default class ShotboundaryAnnotation extends Annotation {
     const offscreen = new OffscreenCanvas(14, 24);
     offscreen.height = 14;
     offscreen.width = 24;
-    const gl = offscreen.getContext('2d', { colorSpace: 'srgb' });
+    const gl = offscreen.getContext('2d', { colorSpace: 'srgb', willReadFrequently: true });
 
     let lastBuffer;
     const frameRate = 30;
@@ -211,7 +212,7 @@ export default class ShotboundaryAnnotation extends Annotation {
 
           const spanAverage = document.getElementById('output-average-length');
           const avgDur = videoVirtual.duration / shotList.length;
-          spanAverage.innerHTML = `<strong>Total Shots</strong>: <span class="has-text-success">${avgDur.toFixed(2)} seconds</span>`;
+          spanAverage.innerHTML = `<strong>Average Length</strong>: <span class="has-text-success">${avgDur.toFixed(2)} seconds</span>`;
         }
 
         this.worker.postMessage({

@@ -14,6 +14,7 @@ export default class ZeroshotAnnotation extends Annotation {
   itype = 'image-corpus';
   pylink = 'https://distant-viewing.github.io/dv-demo/5.1_zeroshot.html';
   dataToDownload = {};
+  exampleNames = null;
   imageSet = [];
   imageUpload = {};
   doneCnt = 0;

@@ -25,38 +25,6 @@ const handleReset = function () {
     .classList.remove('is-success');
 };
 
-const handleRunning = function () {
-  const fileProgress = document.getElementById('file-progress-run');
-  fileProgress.value = 0;
-
-  document.getElementById('annotation-example').classList.add('is-loading');
-  document.getElementById('file-cta-custom').classList.add('is-loading');
-  document
-    .getElementById('file-cta-custom')
-    .classList.remove('file-cta-custom');
-
-  document.getElementById('annotation-example').disabled = true;
-  document.getElementById('annotation-upload').disabled = true;
-  document.getElementById('file-cta-custom').disabled = true;
-  document.getElementById('annotation-download').disabled = true;
-};
-
-const handleResult = function () {
-  document.getElementById('annotation-example').disabled = false;
-  document.getElementById('file-cta-custom').disabled = false;
-  document.getElementById('file-cta-custom').classList.remove('is-loading');
-  document.getElementById('file-cta-custom').classList.add('file-cta-custom');
-  document.getElementById('annotation-upload').disabled = false;
-
-  document.getElementById('annotation-download').disabled = false;
-  document.getElementById('annotation-download').classList.add('is-success');
-  document.getElementById('annotation-download').classList.add('is-light');
-  document.getElementById('annotation-example').classList.remove('is-loading');
-  document
-    .getElementById('annotation-download')
-    .classList.remove('is-loading');
-};
-
 const setupText = function () {
   const finput = document.getElementById('file-input');
   finput.accept = '.txt';
@@ -135,12 +103,20 @@ export default class Annotation {
         this.outputCnt += 1;
         this.handleOutput(e.data);
 
-        document.getElementById('file-progress-run').value =
-          100 * (this.outputCnt / e.data.input.inputLen);
+        const proportionFinished = this.outputCnt / e.data.input.inputLen;
+        document.getElementById('file-progress-run').value = 100 * (proportionFinished);
+
+        const curTime = new Date().getTime() / 1000;
+        const curDuration = (curTime - this.startTime);
+        const estimatedTime = (curDuration / this.outputCnt) * (e.data.input.inputLen - this.outputCnt); 
+
+        const timeLabel = document.getElementById('time-label');
+        timeLabel.innerHTML = `Estimated time remaining: <strong>${estimatedTime.toFixed(1)}</strong> seconds.`;
+
 
         if (this.outputCnt >= e.data.input.inputLen) {
           this.handleDownload();
-          handleResult();
+          this.handleResult();
         }
       } else if (e.data.type === 'output-text') {
         this.handleOutput(e.data);
@@ -198,7 +174,17 @@ export default class Annotation {
 
       const itype2 = (this.itype === 'image-corpus') ? 'image' : this.itype;
 
-      for (const [key, value] of Object.entries(dt)) {
+      let dtFilter = dt;
+      if (this.exampleNames !== null) {
+        dtFilter = this.exampleNames.reduce((obj, key) => {
+          if (key in dtFilter) {
+            obj[key] = dtFilter[key];
+          }
+          return obj;
+        }, {});
+      }
+
+      for (const [key, value] of Object.entries(dtFilter)) {
         if (value['type'] === itype2) {
           const article = document.createElement('article');
           article.className = 'media';
@@ -227,7 +213,7 @@ export default class Annotation {
           divContent.appendChild(divButton).appendChild(button);
 
           button.addEventListener('click', (e) => {
-            handleRunning();
+            this.handleRunning();
             this.outputCnt = 0;
             this.buildOutput();
             this.handleExample(value.short);
@@ -240,7 +226,7 @@ export default class Annotation {
             buttonLong.innerHTML = 'Use It (long)';
             divButton.appendChild(buttonLong);
             buttonLong.addEventListener('click', (e) => {
-              handleRunning();
+              this.handleRunning();
               this.outputCnt = 0;
               this.buildOutput();
               this.handleExample(value.long);
@@ -261,6 +247,48 @@ export default class Annotation {
         }
       }
     });
+  }
+
+  handleRunning() {
+    const timeLabel = document.getElementById('time-label');
+    timeLabel.innerHTML = '';
+
+    this.startTime = new Date().getTime() / 1000;
+    const fileProgress = document.getElementById('file-progress-run');
+    fileProgress.value = 0;
+
+    document.getElementById('annotation-example').classList.add('is-loading');
+    document.getElementById('file-cta-custom').classList.add('is-loading');
+    document
+      .getElementById('file-cta-custom')
+      .classList.remove('file-cta-custom');
+
+    document.getElementById('annotation-example').disabled = true;
+    document.getElementById('annotation-upload').disabled = true;
+    document.getElementById('file-cta-custom').disabled = true;
+    document.getElementById('annotation-download').disabled = true;
+  }
+
+  handleResult() {
+    this.endTime = new Date().getTime() / 1000;
+
+    const timeLabel = document.getElementById('time-label');
+    const timeDuration = (this.endTime - this.startTime).toFixed(1);
+    timeLabel.innerHTML = `Finished in <strong>${timeDuration}</strong> seconds.`;
+
+    document.getElementById('annotation-example').disabled = false;
+    document.getElementById('file-cta-custom').disabled = false;
+    document.getElementById('file-cta-custom').classList.remove('is-loading');
+    document.getElementById('file-cta-custom').classList.add('file-cta-custom');
+    document.getElementById('annotation-upload').disabled = false;
+
+    document.getElementById('annotation-download').disabled = false;
+    document.getElementById('annotation-download').classList.add('is-success');
+    document.getElementById('annotation-download').classList.add('is-light');
+    document.getElementById('annotation-example').classList.remove('is-loading');
+    document
+      .getElementById('annotation-download')
+      .classList.remove('is-loading');
   }
 
   run() {
@@ -321,7 +349,7 @@ export default class Annotation {
       });
 
     document.getElementById('file-input').addEventListener('change', (e) => {
-      handleRunning();
+      this.handleRunning();
       this.outputCnt = 0;
       this.buildOutput();
       this.handleUpload(e);

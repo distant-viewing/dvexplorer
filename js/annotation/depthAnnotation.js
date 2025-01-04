@@ -20,6 +20,7 @@ export default class DepthAnnotation extends Annotation {
   itype = 'image';
   pylink = 'https://distant-viewing.github.io/dv-demo/2.3_depth.html';
   dataToDownload = {};
+  exampleNames = null;
 
   constructor() {
     super();
@@ -69,13 +70,15 @@ export default class DepthAnnotation extends Annotation {
     this.imageDataArray = [];
     this.imageNameArray = [];
 
-    for (let i = 0; i < value.length; i++) {
-      await this.handleInput(
-        value[i].url,
-        value[i].caption,
-        value[i].url,
+    const imageArray = value.filter((s) => !s.url.endsWith('json'));
+
+    for (let i = 0; i < imageArray.length; i++) {
+      this.handleInput(
+        imageArray[i].url,
+        imageArray[i].caption,
+        imageArray[i].url,
         i,
-        value.length,
+        imageArray.length,
       );
     }
   }

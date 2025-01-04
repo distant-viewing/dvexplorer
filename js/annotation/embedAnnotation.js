@@ -17,6 +17,7 @@ export default class EmAnnotation extends Annotation {
   imageSet = [];
   imageUpload = {};
   doneCnt = 0;
+  exampleNames = null;
 
   constructor() {
     super();
@@ -232,8 +233,6 @@ export default class EmAnnotation extends Annotation {
       ];
       for (let i = 0; i < figcaptionImg.length; i++) {
         figcaptionImg[i].addEventListener('click', (e) => {
-          console.log(e.target);
-          console.log(e.target.dataset.index);
           this.handleSelectImage(e.target.dataset.index);
         });
       }

@@ -11,6 +11,7 @@ export default class TranscriptionAnnotation extends Annotation {
   itype = 'video';
   pylink = 'https://distant-viewing.github.io/dv-demo/3.2_transcription.html';
   dataToDownload = {};
+  exampleNames = null;
 
   constructor() {
     super();
@@ -109,7 +110,6 @@ export default class TranscriptionAnnotation extends Annotation {
     const audioData = await extractAudioData(objUrl);
     const dropdown = document.getElementById('select-lang');
     const lang = dropdown.value;
-    console.log(lang);
 
     this.worker.postMessage({
       type: 'pipeline',

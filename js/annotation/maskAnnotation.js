@@ -13,6 +13,7 @@ export default class ClassifyAnnotation extends Annotation {
   itype = 'text';
   pylink = 'https://distant-viewing.github.io/dv-demo/4.4_mask.html';
   dataToDownload = {};
+  exampleNames = ['afimask'];
 
   constructor() {
     super();
@@ -45,6 +46,7 @@ export default class ClassifyAnnotation extends Annotation {
   }
 
   afterLoad() {
+    this.dataToDownload = { manualInput: [] };
     document.getElementById('search-bar').disabled = false;
     this.handleInput(
       'The secret to life is [MASK]!',
@@ -101,7 +103,8 @@ export default class ClassifyAnnotation extends Annotation {
     const reader = new FileReader();
 
     reader.onload = (e) => {
-      const lines = e.target.result.split('\n');
+      let lines = e.target.result.split('\n');
+      lines = lines.filter((s) => (s !== ""));
       this.dataToDownload[uploadInput.target.files[0].name] = Array.apply(
         null,
         Array(lines.length),
@@ -129,7 +132,8 @@ export default class ClassifyAnnotation extends Annotation {
         return res.text();
       })
       .then((data) => {
-        const lines = data.split('\n');
+        let lines = data.split('\n');
+        lines = lines.filter((s) => (s !== ""));
         this.dataToDownload[value[0].url] = Array.apply(
           null,
           Array(lines.length),

@@ -582,3 +582,7 @@ figcaption {
 .photo-row img {
   height: 100px !important;
 }
+
+#time-label {
+  position: relative;
+}

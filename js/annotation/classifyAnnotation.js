@@ -13,6 +13,7 @@ export default class ClassifyAnnotation extends Annotation {
   itype = 'image';
   pylink = 'https://distant-viewing.github.io/dv-demo/2.1_classification.html';
   dataToDownload = {};
+  exampleNames = null;
 
   constructor() {
     super();
@@ -58,13 +59,15 @@ export default class ClassifyAnnotation extends Annotation {
   async handleExample(value) {
     this.dataToDownload = {};
 
-    for (let i = 0; i < value.length; i++) {
+    const imageArray = value.filter((s) => !s.url.endsWith('json'));
+
+    for (let i = 0; i < imageArray.length; i++) {
       this.handleInput(
-        value[i].url,
-        value[i].caption,
-        value[i].url,
+        imageArray[i].url,
+        imageArray[i].caption,
+        imageArray[i].url,
         i,
-        value.length,
+        imageArray.length,
       );
     }
   }
@@ -74,7 +77,7 @@ export default class ClassifyAnnotation extends Annotation {
     const imageContainer = document.createElement('div');
     const imageInner = document.createElement('div');
     const img = document.createElement('img');
-    const sp = document.createElement('span');
+    const sp = document.createElement('p');
     const spRes = document.createElement('span');
 
     imageContainer.className = 'image-container';

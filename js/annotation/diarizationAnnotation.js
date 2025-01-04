@@ -12,6 +12,7 @@ export default class DiarizationAnnotation extends Annotation {
   pylink = 'https://distant-viewing.github.io/dv-demo/3.3_diarization.html';
   dataToDownload = {};
   doneCnt = 0;
+  exampleNames = null;
 
   constructor() {
     super();
@@ -19,7 +20,6 @@ export default class DiarizationAnnotation extends Annotation {
   }
 
   handleLoad(dt) {
-    console.log(dt);
     if (dt.progress.status === 'done') {
       this.doneCnt += 1;
     }
