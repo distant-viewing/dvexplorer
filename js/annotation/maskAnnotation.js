@@ -46,6 +46,7 @@ export default class ClassifyAnnotation extends Annotation {
   }
 
   afterLoad() {
+    this.startTime = new Date().getTime() / 1000;
     this.dataToDownload = { manualInput: [] };
     document.getElementById('search-bar').disabled = false;
     this.handleInput(
