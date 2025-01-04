@@ -46,10 +46,12 @@ const buildNavBar = function () {
   svg.appendChild(path);
 
   // Add the SVG to the link
-  navHomeLink.appendChild(svg);
+  const newImage = document.createElement('img');
+  newImage.src = "../../icon/owl3.png"
+  navHomeLink.appendChild(newImage);
 
   // Add text to the link
-  navHomeLink.appendChild(document.createTextNode(' Distant Viewing GUI'));
+  navHomeLink.appendChild(document.createTextNode(' Distant Viewing Explorer'));
 
   // Add the link to the navbar brand
   navbarBrand.appendChild(navHomeLink);
