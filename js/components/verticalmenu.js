@@ -61,6 +61,7 @@ const buildVerticalMenu = function () {
     { id: 'welcome', text: 'Welcome' },
     { id: 'started', text: '1.1 Getting Started' },
     { id: 'moreinfo', text: '1.2 Further Resources' }, 
+    { id: 'citation', text: '1.3 Citation + Funding' },
   ]);
 
   // Create the "Image" section
