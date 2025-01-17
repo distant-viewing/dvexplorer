@@ -27,7 +27,16 @@ const runPipeline = function (msg) {
           input: msg,
           output: output,
         });
-      });
+      }).catch(
+        (error) => {
+          console.log("!!!");
+          postMessage({
+            type: 'output',
+            input: msg,
+            output: null,
+          })
+        }
+      );
     });
   }
 };
