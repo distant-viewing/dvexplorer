@@ -113,16 +113,18 @@ export default class ClassifyAnnotation extends Annotation {
 
     let outMsg = '<strong>Predicted Categories</strong>: ';
 
-    for (let i = 0; i < dt.output.length; i++) {
-      outMsg += `<span class="has-text-success">${dt.output[i].label}</span> `;
-      outMsg += `(${(dt.output[i].score * 100).toFixed(2)}%)`;
-      if (i !== dt.output.length - 1) {
-        outMsg += '; ';
+    if (dt.output !== null) {
+      for (let i = 0; i < dt.output.length; i++) {
+        outMsg += `<span class="has-text-success">${dt.output[i].label}</span> `;
+        outMsg += `(${(dt.output[i].score * 100).toFixed(2)}%)`;
+        if (i !== dt.output.length - 1) {
+          outMsg += '; ';
+        }
       }
-    }
 
-    outputResults[dt.input.index].innerHTML = outMsg;
-    this.dataToDownload[dt.input.fileName] = dt.output;
+      outputResults[dt.input.index].innerHTML = outMsg;
+      this.dataToDownload[dt.input.fileName] = dt.output;
+    }
   }
 
   handleDownload() {
