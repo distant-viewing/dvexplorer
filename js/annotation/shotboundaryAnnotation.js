@@ -19,7 +19,7 @@ export default class ShotboundaryAnnotation extends Annotation {
   task = 'shot-boundary';
   model = null;
   itype = 'video';
-  pylink = 'https://distant-viewing.github.io/dv-demo/3.1_shot.html';
+  pylink = 'https://distantviewing.org/dvscripts/3.1_shot.html';
   dataToDownload = {};
   exampleNames = null;
 

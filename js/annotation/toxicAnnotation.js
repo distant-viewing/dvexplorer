@@ -11,7 +11,7 @@ export default class ToxicAnnotation extends Annotation {
   task = 'sentiment-analysis';
   model = 'Xenova/toxic-bert';
   itype = 'text';
-  pylink = 'https://distant-viewing.github.io/dv-demo/4.3_comment.html';
+  pylink = 'https://distantviewing.org/dvscripts/4.3_comment.html';
   dataToDownload = {};
   exampleNames = ['afi', 'sotu-text', 'amazon', 'macron-text'];
 
@@ -207,5 +207,15 @@ export default class ToxicAnnotation extends Annotation {
         link.click();
         URL.revokeObjectURL(link.href);
       });
+  }
+
+  afterLoad() {
+    const value = [{
+      "url":"../../text/afismall.txt",
+      "caption": ""
+    }];
+
+    this.handleRunModel();
+    this.handleExample(value);
   }
 }

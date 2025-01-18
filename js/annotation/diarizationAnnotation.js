@@ -9,7 +9,7 @@ export default class DiarizationAnnotation extends Annotation {
   task = 'audio-classification';
   model = 'onnx-community/pyannote-segmentation-3.0';
   itype = 'video';
-  pylink = 'https://distant-viewing.github.io/dv-demo/3.3_diarization.html';
+  pylink = 'https://distantviewing.org/dvscripts/3.3_diarization.html';
   dataToDownload = {};
   doneCnt = 0;
   exampleNames = null;

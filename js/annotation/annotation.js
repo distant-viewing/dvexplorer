@@ -167,6 +167,12 @@ export default class Annotation {
     document.getElementById('annotation-example').classList.add('is-success');
   }
 
+  handleRunModel() {
+    this.handleRunning();
+    this.outputCnt = 0;
+    this.buildOutput();
+  }
+
   makeExamples(modalExample) {
     getData('../../info/examples.json').then((dt) => {
       const exampleBody = document.getElementById('example-body');
@@ -213,9 +219,7 @@ export default class Annotation {
           divContent.appendChild(divButton).appendChild(button);
 
           button.addEventListener('click', (e) => {
-            this.handleRunning();
-            this.outputCnt = 0;
-            this.buildOutput();
+            this.handleRunModel();
             this.handleExample(value.short);
             modalExample.classList.remove('is-active');
           });
@@ -226,9 +230,7 @@ export default class Annotation {
             buttonLong.innerHTML = 'Use It (long)';
             divButton.appendChild(buttonLong);
             buttonLong.addEventListener('click', (e) => {
-              this.handleRunning();
-              this.outputCnt = 0;
-              this.buildOutput();
+              this.handleRunModel();
               this.handleExample(value.long);
               modalExample.classList.remove('is-active');
             });
@@ -349,9 +351,7 @@ export default class Annotation {
       });
 
     document.getElementById('file-input').addEventListener('change', (e) => {
-      this.handleRunning();
-      this.outputCnt = 0;
-      this.buildOutput();
+      this.handleRunModel();
       this.handleUpload(e);
     });
 

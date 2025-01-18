@@ -11,7 +11,7 @@ export default class ClassifyAnnotation extends Annotation {
   task = 'fill-mask';
   model = 'Xenova/bert-base-cased';
   itype = 'text';
-  pylink = 'https://distant-viewing.github.io/dv-demo/4.4_mask.html';
+  pylink = 'https://distantviewing.org/dvscripts/4.4_mask.html';
   dataToDownload = {};
   exampleNames = ['afimask'];
 
@@ -43,19 +43,6 @@ export default class ClassifyAnnotation extends Annotation {
       } else {
       }
     });
-  }
-
-  afterLoad() {
-    this.startTime = new Date().getTime() / 1000;
-    this.dataToDownload = { manualInput: [] };
-    document.getElementById('search-bar').disabled = false;
-    this.handleInput(
-      'The secret to life is [MASK]!',
-      '',
-      'manualInput',
-      0,
-      1,
-    );
   }
 
   startWorkers() {
@@ -223,5 +210,15 @@ export default class ClassifyAnnotation extends Annotation {
         link.click();
         URL.revokeObjectURL(link.href);
       });
+  }
+
+  afterLoad() {
+    const value = [{
+      "url":"../../text/afimasksmall.txt",
+      "caption": ""
+    }];
+
+    this.handleRunModel();
+    this.handleExample(value);
   }
 }

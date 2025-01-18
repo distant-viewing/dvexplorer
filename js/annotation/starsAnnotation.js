@@ -11,7 +11,7 @@ export default class StarsAnnotation extends Annotation {
   task = 'sentiment-analysis';
   model = 'Xenova/bert-base-multilingual-uncased-sentiment';
   itype = 'text';
-  pylink = 'https://distant-viewing.github.io/dv-demo/4.2_review.html';
+  pylink = 'https://distantviewing.org/dvscripts/4.2_review.html';
   dataToDownload = {};
   exampleNames = ['afi', 'sotu-text', 'amazon', 'macron-text'];
 
@@ -207,5 +207,15 @@ export default class StarsAnnotation extends Annotation {
         link.click();
         URL.revokeObjectURL(link.href);
       });
+  }
+
+  afterLoad() {
+    const value = [{
+      "url":"../../text/amazonsmall.txt",
+      "caption": ""
+    }];
+
+    this.handleRunModel();
+    this.handleExample(value);
   }
 }

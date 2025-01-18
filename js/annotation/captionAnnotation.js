@@ -11,7 +11,7 @@ export default class ClassifyAnnotation extends Annotation {
   task = 'image-to-text';
   model = 'Xenova/vit-gpt2-image-captioning';
   itype = 'image';
-  pylink = 'https://distant-viewing.github.io/dv-demo/5.2_caption.html';
+  pylink = 'https://distantviewing.org/dvscripts/5.2_caption.html';
   dataToDownload = {};
   exampleNames = null;
 
@@ -133,5 +133,18 @@ export default class ClassifyAnnotation extends Annotation {
         link.click();
         URL.revokeObjectURL(link.href);
       });
+  }
+
+  afterLoad() {
+    const value = [{
+      "url":"../../img/fsac/service-pnp-fsac-1a35000-1a35000-1a35022v.png",
+      "caption": "Russell Lee, August 1942 <i>Shepherd with his horse and " +
+                  "dog on Gravelly Range, Madison County, Montana</i>" +
+                  " <a href='https://www.loc.gov/pictures/collection/fsac/item/2017878800/'" +
+                  "target='_blank' rel='noopener noreferrer'>[link]<\/a>"
+    }];
+
+    this.handleRunModel();
+    this.handleExample(value);
   }
 }

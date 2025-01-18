@@ -12,7 +12,7 @@ export default class ZeroshotAnnotation extends Annotation {
   task = 'zero-shot-image-classification';
   model = 'Xenova/siglip-base-patch16-224';
   itype = 'image-corpus';
-  pylink = 'https://distant-viewing.github.io/dv-demo/5.1_zeroshot.html';
+  pylink = 'https://distantviewing.org/dvscripts/5.1_zeroshot.html';
   dataToDownload = {};
   exampleNames = null;
   imageSet = [];
@@ -244,6 +244,13 @@ export default class ZeroshotAnnotation extends Annotation {
         text: sbar.value,
       });
     }
+  }
+
+  afterLoad() {
+    getData('../../info/examples.json').then((dt) => {
+      this.handleRunModel();
+      this.handleExample(dt['met']['long']);
+    });
   }
 }
 

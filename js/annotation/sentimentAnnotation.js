@@ -11,7 +11,7 @@ export default class SentimentAnnotation extends Annotation {
   task = 'sentiment-analysis';
   model = 'Xenova/distilbert-base-uncased-finetuned-sst-2-english';
   itype = 'text';
-  pylink = 'https://distant-viewing.github.io/dv-demo/4.1_sentiment.html';
+  pylink = 'https://distantviewing.org/dvscripts/4.1_sentiment.html';
   dataToDownload = {};
   exampleNames = ['afi', 'sotu-text', 'amazon', 'macron-text'];
 
@@ -201,5 +201,15 @@ export default class SentimentAnnotation extends Annotation {
         link.click();
         URL.revokeObjectURL(link.href);
       });
+  }
+
+  afterLoad() {
+    const value = [{
+      "url":"../../text/afismall.txt",
+      "caption": ""
+    }];
+
+    this.handleRunModel();
+    this.handleExample(value);
   }
 }

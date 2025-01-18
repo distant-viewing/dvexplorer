@@ -18,7 +18,7 @@ export default class DepthAnnotation extends Annotation {
   task = 'depth-estimation';
   model = 'Xenova/depth-anything-base-hf';
   itype = 'image';
-  pylink = 'https://distant-viewing.github.io/dv-demo/2.3_depth.html';
+  pylink = 'https://distantviewing.org/dvscripts/2.3_depth.html';
   dataToDownload = {};
   exampleNames = null;
 
@@ -183,6 +183,7 @@ export default class DepthAnnotation extends Annotation {
     // iterate over the images and store in a zip archive
     for (let i = 0; i < res.length; i++) {
       let fname = this.imageNameArray[i];
+      fname = fname.split('\\').pop().split('/').pop();
       if (!fname.endsWith('.png')) {
         fname += '.png';
       }
@@ -203,5 +204,18 @@ export default class DepthAnnotation extends Annotation {
         link.click();
         URL.revokeObjectURL(link.href);
       });
+  }
+
+  afterLoad() {
+    const value = [{
+      "url":"../../img/fsac/service-pnp-fsac-1a35000-1a35000-1a35022v.png",
+      "caption": "Russell Lee, August 1942 <i>Shepherd with his horse and " +
+                  "dog on Gravelly Range, Madison County, Montana</i>" +
+                  " <a href='https://www.loc.gov/pictures/collection/fsac/item/2017878800/'" +
+                  "target='_blank' rel='noopener noreferrer'>[link]<\/a>"
+    }];
+
+    this.handleRunModel();
+    this.handleExample(value);
   }
 }

@@ -11,7 +11,7 @@ export default class SegmentAnnotation extends Annotation {
   task = 'image-segmentation';
   model = 'Xenova/segformer-b0-finetuned-ade-512-512'; // Xenova/segformer_b2_clothes
   itype = 'image';
-  pylink = 'https://distant-viewing.github.io/dv-demo/2.4_segment.html';
+  pylink = 'https://distantviewing.org/dvscripts/2.4_segment.html';
   dataToDownload = {};
   exampleNames = null;
 
@@ -170,7 +170,21 @@ export default class SegmentAnnotation extends Annotation {
         URL.revokeObjectURL(link.href);
       });
   }
+
+  afterLoad() {
+    const value = [{
+      "url":"../../img/fsac/service-pnp-fsac-1a35000-1a35000-1a35022v.png",
+      "caption": "Russell Lee, August 1942 <i>Shepherd with his horse and " +
+                  "dog on Gravelly Range, Madison County, Montana</i>" +
+                  " <a href='https://www.loc.gov/pictures/collection/fsac/item/2017878800/'" +
+                  "target='_blank' rel='noopener noreferrer'>[link]<\/a>"
+    }];
+
+    this.handleRunModel();
+    this.handleExample(value);
+  }
 }
+
 
 // CODE BELOW IS ADAPTED FROM:
 // https://huggingface.co/spaces/Xenova/face-segmentation-web

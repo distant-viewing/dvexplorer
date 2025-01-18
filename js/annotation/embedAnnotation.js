@@ -12,7 +12,7 @@ export default class EmAnnotation extends Annotation {
   task = 'image-feature-extraction';
   model = 'Xenova/vit-base-patch16-224-in21k';
   itype = 'image-corpus';
-  pylink = 'https://distant-viewing.github.io/dv-demo/2.5_embed.html';
+  pylink = 'https://distantviewing.org/dvscripts/2.5_embed.html';
   dataToDownload = {};
   imageSet = [];
   imageUpload = {};
@@ -238,6 +238,14 @@ export default class EmAnnotation extends Annotation {
       }
     });
   }
+
+  afterLoad() {
+    getData('../../info/examples.json').then((dt) => {
+      this.handleRunModel();
+      this.handleExample(dt['met']['long']);
+    });
+  }
+  
 }
 
 const argsortRev = function (array) {
