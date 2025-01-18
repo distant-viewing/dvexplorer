@@ -29,22 +29,31 @@ const loadModel = async function (msg) {
 const runPipeline = async function (msg) {
   const [model, processor] = await modelPipeline;
 
-  const inputs = await processor(msg.image);
-  const { logits } = await model(inputs);
-  const segments = processor.post_process_speaker_diarization(
-    logits,
-    msg.image.length,
-  )[0];
+  try {
+    const inputs = await processor(msg.image);
+    const { logits } = await model(inputs);
+    const segments = processor.post_process_speaker_diarization(
+      logits,
+      msg.image.length,
+    )[0];
 
-  for (const segment of segments) {
-    segment.label = model.config.id2label[segment.id];
+    for (const segment of segments) {
+      segment.label = model.config.id2label[segment.id];
+    }
+
+    postMessage({
+      type: 'output',
+      input: msg,
+      output: segments,
+    });
+  } catch (error) {
+    console.log("Model Error (returning no data):", error);
+    postMessage({
+      type: 'output',
+      input: msg,
+      output: null,
+    });
   }
-
-  postMessage({
-    type: 'output',
-    input: msg,
-    output: segments,
-  });
 };
 
 let modelPipeline = null;

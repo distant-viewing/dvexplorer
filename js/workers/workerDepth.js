@@ -29,7 +29,16 @@ const runPipeline = function (msg) {
           output: depth,
         });
       });
-    });
+    }).catch(
+      (error) => {
+        console.log("Model Error (returning no data):", error);
+        postMessage({
+          type: 'output',
+          input: msg,
+          output: null,
+        });
+      }
+    );
   }
 };
 

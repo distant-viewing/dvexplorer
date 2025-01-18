@@ -93,9 +93,6 @@ export default class ToxicAnnotation extends Annotation {
         0,
         1,
       );
-
-      //document.getElementById("search-bar").disabled = true;
-      //setClass(document.getElementById("search-bar-control"), "is-loading", true);
     }
   }
 
@@ -171,6 +168,10 @@ export default class ToxicAnnotation extends Annotation {
   }
 
   handleOutput(dt) {
+    if (dt.output === null) {
+      return;
+    }
+    
     const outputResults = document.getElementsByClassName(
       'output-result-classify',
     );

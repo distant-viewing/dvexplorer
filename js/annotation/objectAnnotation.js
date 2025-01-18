@@ -105,6 +105,10 @@ export default class ObjectAnnotation extends Annotation {
   }
 
   handleOutput(dt) {
+    if (dt.output === null) {
+      return;
+    }
+    
     const outputImages = document.getElementsByClassName('inner-image');
     const outputImagesImg = document.getElementsByClassName('inner-image-img');
 

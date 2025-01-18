@@ -112,6 +112,10 @@ export default class SegmentAnnotation extends Annotation {
   }
 
   handleOutput(dt) {
+    if (dt.output === null) {
+      return;
+    }
+    
     const imageContainerLabel = [
       ...document.getElementsByClassName('container-label'),
     ][dt.input.index];

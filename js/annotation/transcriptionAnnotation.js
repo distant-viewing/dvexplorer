@@ -131,6 +131,10 @@ export default class TranscriptionAnnotation extends Annotation {
   }
 
   handleOutput(dt) {
+    if (dt.output === null) {
+      return;
+    }
+    
     const outTrans = document.getElementById('output-transcription');
     const ch = dt.output.chunks;
 

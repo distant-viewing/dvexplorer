@@ -29,7 +29,7 @@ const runPipeline = function (msg) {
         });
       }).catch(
         (error) => {
-          console.log("!!!");
+          console.log("Model Error (returning no data):", error);
           postMessage({
             type: 'output',
             input: msg,

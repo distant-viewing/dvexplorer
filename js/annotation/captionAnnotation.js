@@ -108,6 +108,10 @@ export default class ClassifyAnnotation extends Annotation {
   }
 
   handleOutput(dt) {
+    if (dt.output === null) {
+      return;
+    }
+
     const outputResults = document.getElementsByClassName(
       'output-result-classify',
     );

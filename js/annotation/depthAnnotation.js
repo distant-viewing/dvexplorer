@@ -126,6 +126,10 @@ export default class DepthAnnotation extends Annotation {
   }
 
   handleOutput(dt) {
+    if (dt.output === null) {
+      return;
+    }
+
     const outputImages = document.getElementsByClassName(
       'inner-image-img-depth-2',
     );
