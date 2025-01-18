@@ -97,6 +97,15 @@ export default class DepthAnnotation extends Annotation {
     img2.className = 'inner-image-img-depth inner-image-img-depth-2';
     sp.className = 'output-label pb-5';
 
+    sp.innerHTML = caption;
+    output
+      .appendChild(imageContainer)
+      .appendChild(imageInner)
+      .appendChild(img1);
+
+    imageInner.appendChild(img2);
+    output.appendChild(sp);
+
     img1.src = objUrl;
     img2.src = objUrl;
     await img1.decode();
@@ -106,15 +115,6 @@ export default class DepthAnnotation extends Annotation {
     const conWidth = conHeight * aspRatio;
     imageContainer.style.height = conHeight.toString() + 'px';
     imageContainer.style.width = conWidth.toString() + 'px';
-
-    sp.innerHTML = caption;
-    output
-      .appendChild(imageContainer)
-      .appendChild(imageInner)
-      .appendChild(img1);
-
-    imageInner.appendChild(img2);
-    output.appendChild(sp);
 
     this.worker.postMessage({
       type: 'pipeline',
