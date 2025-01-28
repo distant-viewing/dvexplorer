@@ -91,46 +91,30 @@ const buildAnnotationInfo = function () {
 
   fileButtonsDiv.appendChild(exampleButton);
 
-  // Create the Upload fieldset
-  const uploadFieldset = document.createElement('fieldset');
-  uploadFieldset.id = 'annotation-upload';
-  uploadFieldset.disabled = true;
+  // Create the Upload Button
+  const uploadButton = document.createElement('button');
+  uploadButton.id = 'annotation-upload';
+  uploadButton.className = 'button is-small btn-custom';
+  uploadButton.disabled = true;
 
-  const fileLabel = document.createElement('label');
-  fileLabel.className = 'file-label';
+  const inputIconSpan = document.createElement('span');
+  inputIconSpan.className = 'file-icon';
+  const inputIcon = document.createElement('i');
+  inputIcon.className = 'fas fa-file-arrow-up';
+  inputIcon.setAttribute('aria-hidden', 'true');
+  inputIconSpan.appendChild(inputIcon);
+  uploadButton.appendChild(inputIconSpan);
+  fileButtonsDiv.appendChild(uploadButton);
 
-  const fileInput = document.createElement('input');
-  fileInput.className = 'file-input';
-  fileInput.id = 'file-input';
-  fileInput.type = 'file';
-  fileInput.accept = 'image/*';
-  fileLabel.appendChild(fileInput);
-
-  const fileCtaSpan = document.createElement('span');
-  fileCtaSpan.className = 'file-cta';
-  fileCtaSpan.id = 'file-cta-custom';
-
-  const uploadIconSpan = document.createElement('span');
-  uploadIconSpan.className = 'file-icon';
-  const uploadIcon = document.createElement('i');
-  uploadIcon.className = 'fas fa-file-arrow-up';
-  uploadIconSpan.appendChild(uploadIcon);
-  fileCtaSpan.appendChild(uploadIconSpan);
-
-  const uploadTextSpan = document.createElement('span');
-  uploadTextSpan.className = 'file-label is-small';
-  uploadTextSpan.id = 'annotation-upload-span';
-  uploadTextSpan.innerHTML = 'Upload<br />Video…';
-  fileCtaSpan.appendChild(uploadTextSpan);
-
-  fileLabel.appendChild(fileCtaSpan);
-  uploadFieldset.appendChild(fileLabel);
-  fileButtonsDiv.appendChild(uploadFieldset);
+  const inputTextSpan = document.createElement('span');
+  inputTextSpan.id = 'annotation-upload-label';
+  inputTextSpan.innerHTML = 'Upload<br>Files…';
+  uploadButton.appendChild(inputTextSpan);
 
   // Create the Download Output button
   const downloadButton = document.createElement('button');
   downloadButton.id = 'annotation-download';
-  downloadButton.className = 'button is-small btn-custom has-no-left-border';
+  downloadButton.className = 'button is-small btn-custom';
   downloadButton.disabled = true;
 
   const downloadIconSpan = document.createElement('span');

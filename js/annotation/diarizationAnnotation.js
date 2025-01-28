@@ -8,7 +8,7 @@ export default class DiarizationAnnotation extends Annotation {
   dtype = 'q8';
   task = 'audio-classification';
   model = 'onnx-community/pyannote-segmentation-3.0';
-  itype = 'video';
+  itype = 'audiovideo';
   pylink = 'https://distantviewing.org/dvscripts/3.3_diarization.html';
   dataToDownload = {};
   doneCnt = 0;

@@ -76,6 +76,8 @@ export default class SentimentAnnotation extends Annotation {
     this.dataToDownload = { manualInput: [] };
 
     if (e.key === 'Enter') {
+      this.handleRunning();
+      
       [...document.getElementsByClassName('output-paragraph')].forEach(
         (element) => {
           element.remove();
@@ -193,9 +195,7 @@ export default class SentimentAnnotation extends Annotation {
     Object.entries(this.dataToDownload).forEach(([path, entries]) => {
       entries.forEach(entry => {
         const { input, output } = entry;
-        output.forEach(({ label, score }) => {
-          rows.push([path, input, label, score]);
-        });
+        rows.push([path, input, output.label, output.score])
       });
     });
 

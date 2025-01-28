@@ -8,7 +8,7 @@ export default class TranscriptionAnnotation extends Annotation {
   dtype = 'q8';
   task = 'automatic-speech-recognition';
   model = 'Xenova/whisper-base';
-  itype = 'video';
+  itype = 'audiovideo';
   pylink = 'https://distantviewing.org/dvscripts/3.2_transcription.html';
   dataToDownload = {};
   exampleNames = null;
@@ -100,6 +100,18 @@ export default class TranscriptionAnnotation extends Annotation {
         value.length,
       );
     }
+  }
+
+  async handleUrl(value) {
+    this.dataToDownload = {};
+
+    this.handleInput(
+      value,
+      value,
+      value,
+      0,
+      1,
+    );
   }
 
   async handleInput(objUrl, caption, fname, index, inputLen) {

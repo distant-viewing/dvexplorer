@@ -75,6 +75,8 @@ export default class ToxicAnnotation extends Annotation {
     this.dataToDownload = { manualInput: [] };
 
     if (e.key === 'Enter') {
+      this.handleRunning();
+
       [...document.getElementsByClassName('output-paragraph')].forEach(
         (element) => {
           element.remove();

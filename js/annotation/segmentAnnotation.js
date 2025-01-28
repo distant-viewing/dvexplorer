@@ -93,22 +93,46 @@ export default class SegmentAnnotation extends Annotation {
     // create a DOM element to access a 'src' element
     const img = document.createElement('img');
     img.src = objUrl;
-    await img.decode();
 
-    const aspRatio = img.naturalWidth / img.naturalHeight;
+    img.onerror = () => {
+      this.buildOutput();
 
-    const conHeight = Math.min(616 / aspRatio, 500);
-    const conWidth = conHeight * aspRatio;
-    imageContainerLabel.style.height = conHeight.toString() + 'px';
-    imageContainerLabel.style.width = conWidth.toString() + 'px';
+      const output = document.getElementById('annotation-output');
+      const msg = document.createElement('p');
+      msg.innerHTML = 'Not able to load image from URL <b>' + objUrl + '</b>';
+      msg.innerHTML += ". Please try again with another input or example!"
+      output.appendChild(msg);
 
-    this.worker.postMessage({
-      type: 'pipeline',
-      image: img.src,
-      fileName: fname,
-      index: index,
-      inputLen: inputLen,
-    });
+      this.handleError();
+    };
+
+    img.onload = () => {
+      const aspRatio = img.naturalWidth / img.naturalHeight;
+      const conHeight = Math.min(616 / aspRatio, 500);
+      const conWidth = conHeight * aspRatio;
+      imageContainerLabel.style.height = conHeight.toString() + 'px';
+      imageContainerLabel.style.width = conWidth.toString() + 'px';
+
+      this.worker.postMessage({
+        type: 'pipeline',
+        image: img.src,
+        fileName: fname,
+        index: index,
+        inputLen: inputLen,
+      });
+    };
+  }
+
+  async handleUrl(value) {
+    this.dataToDownload = {};
+
+    this.handleInput(
+      value,
+      value,
+      value,
+      0,
+      1,
+    );
   }
 
   handleOutput(dt) {

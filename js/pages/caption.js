@@ -5,6 +5,7 @@ import dvcontainer from '../components/dvcontainer.js';
 import modalexample from '../components/modalexample.js';
 import modalinfo from '../components/modalinfo.js';
 import modalimage from '../components/modalimage.js';
+import modalupload from '../components/modalupload.js';
 
 import CaptionAnnotation from '../annotation/captionAnnotation.js';
 
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   modalexample();
   modalinfo();
   modalimage();
+  modalupload();
   
   // create the annotation and run it
   anno = new CaptionAnnotation();

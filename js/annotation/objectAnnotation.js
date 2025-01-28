@@ -72,6 +72,18 @@ export default class ObjectAnnotation extends Annotation {
     }
   }
 
+  async handleUrl(value) {
+    this.dataToDownload = {};
+
+    this.handleInput(
+      value,
+      value,
+      value,
+      0,
+      1,
+    );
+  }
+  
   async handleInput(objUrl, caption, fname, index, inputLen) {
     const output = document.getElementById('annotation-output');
     const imageContainer = document.createElement('div');
@@ -92,16 +104,29 @@ export default class ObjectAnnotation extends Annotation {
       .appendChild(img);
 
     output.appendChild(sp);
-    await img.decode();
 
-    this.worker.postMessage({
-      type: 'pipeline',
-      image: img.src,
-      modelOpts: { threshold: 0.8, percentage: true },
-      fileName: fname,
-      index: index,
-      inputLen: inputLen,
-    });
+    img.onerror = () => {
+      this.buildOutput();
+
+      const output = document.getElementById('annotation-output');
+      const msg = document.createElement('p');
+      msg.innerHTML = 'Not able to load image from URL <b>' + objUrl + '</b>';
+      msg.innerHTML += ". Please try again with another input or example!"
+      output.appendChild(msg);
+
+      this.handleError();
+    };
+
+    img.onload = () => {
+      this.worker.postMessage({
+        type: 'pipeline',
+        image: img.src,
+        modelOpts: { threshold: 0.8, percentage: true },
+        fileName: fname,
+        index: index,
+        inputLen: inputLen,
+      });
+    };
   }
 
   handleOutput(dt) {

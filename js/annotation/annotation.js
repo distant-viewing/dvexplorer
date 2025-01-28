@@ -4,20 +4,17 @@ const handleReset = function () {
   document.getElementById('annotation-options').innerHTML = '';
   document.getElementById('file-progress-load').value = 0;
   document.getElementById('file-progress-run').value = 0;
-  document.getElementById('annotation-load').classList.remove('is-loading');
   document.getElementById('annotation-load').disabled = false;
   document.getElementById('annotation-load').classList.add('is-success');
   document.getElementById('annotation-load').classList.add('is-light');
-  document.getElementById('annotation-upload').disabled = true;
   document.getElementById('annotation-example').disabled = true;
   document.getElementById('annotation-example').classList.remove('is-light');
   document.getElementById('annotation-example').classList.remove('is-loading');
+  document.getElementById('annotation-upload').disabled = true;
+  document.getElementById('annotation-upload').classList.remove('is-light');
+  document.getElementById('annotation-upload').classList.remove('is-loading');
   document.getElementById('annotation-download').disabled = true;
   document.getElementById('annotation-download').classList.remove('is-light');
-  document
-    .getElementById('file-cta-custom')
-    .classList.remove('file-cta-custom');
-  document.getElementById('file-cta-custom').classList.remove('is-loading');
 
   document.getElementById('annotation-example').classList.remove('is-success');
   document
@@ -31,8 +28,14 @@ const setupText = function () {
   finput.webkitdirectory = false;
   finput.multiple = false;
 
-  const uspan = document.getElementById('annotation-upload-span');
-  uspan.innerHTML = 'Upload<br />Text…';
+  const uploadSpan = document.getElementById('annotation-upload-span');
+  uploadSpan.innerHTML = 'Upload text file…';
+
+  const uploadInstructions = document.getElementById('upload-instructions');
+  uploadInstructions.innerHTML = 'Select a text file to upload, with one entry on each line.';
+
+  const urlInput = document.getElementById('url-input');
+  urlInput.classList.add('is-hidden');
 };
 
 const setupImage = function () {
@@ -41,8 +44,14 @@ const setupImage = function () {
   finput.webkitdirectory = false;
   finput.multiple = true;
 
-  const uspan = document.getElementById('annotation-upload-span');
-  uspan.innerHTML = 'Upload<br />Image(s)…';
+  const uploadSpan = document.getElementById('annotation-upload-span');
+  uploadSpan.innerHTML = 'Upload image file(s)…';
+
+  const uploadInstructions = document.getElementById('upload-instructions');
+  uploadInstructions.innerHTML = 'Select one or more image files to upload.';
+
+  const urlInput = document.getElementById('url-input');
+  urlInput.classList.remove('is-hidden');
 };
 
 const setupImageCorpus = function () {
@@ -51,18 +60,46 @@ const setupImageCorpus = function () {
   finput.webkitdirectory = false;
   finput.multiple = true;
 
-  const uspan = document.getElementById('annotation-upload-span');
-  uspan.innerHTML = 'Upload<br />Image(s)…';
+  const uploadSpan = document.getElementById('annotation-upload-span');
+  uploadSpan.innerHTML = 'Upload image file(s)…';
+
+  const uploadInstructions = document.getElementById('upload-instructions');
+  uploadInstructions.innerHTML = 'Select one or more image files to upload.';
+
+  const urlInput = document.getElementById('url-input');
+  urlInput.classList.add('is-hidden');
 };
 
 const setupVideo = function () {
+  const finput = document.getElementById('file-input');
+  finput.accept = 'video/*';
+  finput.webkitdirectory = false;
+  finput.multiple = false;
+
+  const uploadSpan = document.getElementById('annotation-upload-span');
+  uploadSpan.innerHTML = 'Upload video file…';
+
+  const uploadInstructions = document.getElementById('upload-instructions');
+  uploadInstructions.innerHTML = 'Select a video file to upload.';
+
+  const urlInput = document.getElementById('url-input');
+  urlInput.classList.add('is-hidden');
+};
+
+const setupAudioVideo = function () {
   const finput = document.getElementById('file-input');
   finput.accept = 'video/*,audio/*';
   finput.webkitdirectory = false;
   finput.multiple = false;
 
-  const uspan = document.getElementById('annotation-upload-span');
-  uspan.innerHTML = 'Upload<br />A/V …';
+  const uploadSpan = document.getElementById('annotation-upload-span');
+  uploadSpan.innerHTML = 'Upload video or audio file…';
+
+  const uploadInstructions = document.getElementById('upload-instructions');
+  uploadInstructions.innerHTML = 'Select an video or audio file to upload.';
+
+  const urlInput = document.getElementById('url-input');
+  urlInput.classList.add('is-hidden');
 };
 
 export default class Annotation {
@@ -74,6 +111,8 @@ export default class Annotation {
   buildOutput() {}
 
   handleUpload(uploadInput) {}
+
+  handleUrl(url) {}
 
   handleOutput(dt) {}
 
@@ -158,13 +197,12 @@ export default class Annotation {
     document.getElementById('annotation-load').classList.remove('is-success');
     document.getElementById('annotation-load').classList.remove('is-light');
     document.getElementById('annotation-load').disabled = true;
-    document.getElementById('annotation-upload').disabled = false;
     document.getElementById('annotation-example').disabled = false;
     document.getElementById('annotation-example').classList.add('is-light');
-    document
-      .getElementById('file-cta-custom')
-      .classList.add('file-cta-custom');
     document.getElementById('annotation-example').classList.add('is-success');
+    document.getElementById('annotation-upload').disabled = false;
+    document.getElementById('annotation-upload').classList.add('is-light');
+    document.getElementById('annotation-upload').classList.add('is-success');
   }
 
   handleRunModel() {
@@ -178,7 +216,8 @@ export default class Annotation {
       const exampleBody = document.getElementById('example-body');
       exampleBody.innerHTML = '';
 
-      const itype2 = (this.itype === 'image-corpus') ? 'image' : this.itype;
+      let itype2 = (this.itype === 'image-corpus') ? 'image' : this.itype;
+      itype2 = (this.itype === 'audiovideo') ? 'video' : itype2;
 
       let dtFilter = dt;
       if (this.exampleNames !== null) {
@@ -260,15 +299,20 @@ export default class Annotation {
     fileProgress.value = 0;
 
     document.getElementById('annotation-example').classList.add('is-loading');
-    document.getElementById('file-cta-custom').classList.add('is-loading');
-    document
-      .getElementById('file-cta-custom')
-      .classList.remove('file-cta-custom');
+    document.getElementById('annotation-upload').classList.add('is-loading');
+    document.getElementById('annotation-download').classList.add('is-loading');
+    document.getElementById('annotation-download').classList.add('is-light');
+    document.getElementById('annotation-download').classList.add('is-success');
 
     document.getElementById('annotation-example').disabled = true;
     document.getElementById('annotation-upload').disabled = true;
-    document.getElementById('file-cta-custom').disabled = true;
     document.getElementById('annotation-download').disabled = true;
+  }
+
+  handleError () {
+    this.handleResult();
+    document.getElementById('annotation-download').disabled = true;
+    document.getElementById('annotation-download').classList.remove('is-success');
   }
 
   handleResult() {
@@ -279,18 +323,14 @@ export default class Annotation {
     timeLabel.innerHTML = `Finished in <strong>${timeDuration}</strong> seconds.`;
 
     document.getElementById('annotation-example').disabled = false;
-    document.getElementById('file-cta-custom').disabled = false;
-    document.getElementById('file-cta-custom').classList.remove('is-loading');
-    document.getElementById('file-cta-custom').classList.add('file-cta-custom');
     document.getElementById('annotation-upload').disabled = false;
 
     document.getElementById('annotation-download').disabled = false;
     document.getElementById('annotation-download').classList.add('is-success');
     document.getElementById('annotation-download').classList.add('is-light');
     document.getElementById('annotation-example').classList.remove('is-loading');
-    document
-      .getElementById('annotation-download')
-      .classList.remove('is-loading');
+    document.getElementById('annotation-upload').classList.remove('is-loading');
+    document.getElementById('annotation-download').classList.remove('is-loading');
   }
 
   run() {
@@ -315,7 +355,9 @@ export default class Annotation {
       setupImageCorpus();
     } else if (this.itype === 'text') {
       setupText();
-    } else if (this.itype === 'video') {
+    } else if (this.itype === 'audiovideo') {
+      setupAudioVideo();
+    }else if (this.itype === 'video') {
       setupVideo();
     }
 
@@ -324,7 +366,7 @@ export default class Annotation {
     // see: https://stackoverflow.com/questions/4386300
     const annotationLoad = document.getElementById('annotation-load');
     const annotationExample = document.getElementById('annotation-example');
-    const fileInput = document.getElementById('file-input');
+    const fileInput = document.getElementById('annotation-upload');
     annotationLoad.replaceWith(annotationLoad.cloneNode(true));
     annotationExample.replaceWith(annotationExample.cloneNode(true));
     fileInput.replaceWith(fileInput.cloneNode(true));
@@ -337,6 +379,7 @@ export default class Annotation {
     // NOTE: cannot reuse objects above (i.e., annotationLoad) because
     // they point to the previous versions of the nodes before cloning
     const modalExample = document.getElementById('modal-example');
+    const modalUpload = document.getElementById('modal-upload');
 
     document
       .getElementById('annotation-load')
@@ -350,11 +393,31 @@ export default class Annotation {
         modalExample.classList.add('is-active');
       });
 
-    document.getElementById('file-input').addEventListener('change', (e) => {
-      this.handleRunModel();
-      this.handleUpload(e);
+    this.makeExamples(modalExample);
+
+    document
+      .getElementById('file-input')
+      .addEventListener('change', (e) => {
+        this.handleRunModel();
+        this.handleUpload(e);
+        modalUpload.classList.remove('is-active');
     });
 
-    this.makeExamples(modalExample);
+    document
+      .getElementById('annotation-upload')
+      .addEventListener('click', () => {
+        modalUpload.classList.add('is-active');
+      });
+
+    document
+      .getElementById('url-input')
+      .addEventListener('keypress', (e) => {
+        if (e.key === "Enter") {
+          this.handleRunModel();
+          this.handleUrl(document.getElementById('url-input').value);
+          modalUpload.classList.remove('is-active');          
+        }
+    });
+    
   }
 }

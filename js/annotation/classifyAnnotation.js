@@ -72,6 +72,18 @@ export default class ClassifyAnnotation extends Annotation {
     }
   }
 
+  async handleUrl(value) {
+    this.dataToDownload = {};
+
+    this.handleInput(
+      value,
+      value,
+      value,
+      0,
+      1,
+    );
+  }
+
   async handleInput(objUrl, caption, fname, index, inputLen) {
     const output = document.getElementById('annotation-output');
     const imageContainer = document.createElement('div');
@@ -86,6 +98,8 @@ export default class ClassifyAnnotation extends Annotation {
     sp.className = 'output-label';
     spRes.className = 'output-result-classify';
 
+    img.addEventListener('error', () => { this.handleResult(); });
+
     img.src = objUrl;
     sp.innerHTML = caption;
     output
@@ -95,15 +109,28 @@ export default class ClassifyAnnotation extends Annotation {
 
     output.appendChild(sp);
     output.appendChild(spRes);
-    await img.decode();
 
-    this.worker.postMessage({
-      type: 'pipeline',
-      image: img.src,
-      fileName: fname,
-      index: index,
-      inputLen: inputLen,
-    });
+    img.onerror = () => {
+      this.buildOutput();
+
+      const output = document.getElementById('annotation-output');
+      const msg = document.createElement('p');
+      msg.innerHTML = 'Not able to load image from URL <b>' + objUrl + '</b>';
+      msg.innerHTML += ". Please try again with another input or example!"
+      output.appendChild(msg);
+
+      this.handleError();
+    };
+
+    img.onload = () => {
+      this.worker.postMessage({
+        type: 'pipeline',
+        image: img.src,
+        fileName: fname,
+        index: index,
+        inputLen: inputLen,
+      }); 
+    };
   }
 
   handleOutput(dt) {

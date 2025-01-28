@@ -233,6 +233,7 @@ export default class EmAnnotation extends Annotation {
       ];
       for (let i = 0; i < figcaptionImg.length; i++) {
         figcaptionImg[i].addEventListener('click', (e) => {
+          document.getElementById('annotation-output').scrollTop = 0;
           this.handleSelectImage(e.target.dataset.index);
         });
       }

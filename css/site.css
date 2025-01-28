@@ -356,10 +356,10 @@ figcaption {
 
 .file-cta {
   border-style: solid;
-  background-color: var(--bulma-scheme-main);
+  background-color: white;
   border-color: var(--bulma-border);
+  border-radius: 5px;
   box-shadow: none;
-  opacity: 0.5;
 }
 
 .file-cta-custom {
@@ -403,6 +403,13 @@ figcaption {
   height: calc(100vh - 60px);
 }
 
+#upload-file {
+/*  border: 2px solid var(--bulma-loading-color);
+  border-radius: var(--bulma-radius-rounded);
+  border-right-color: transparent;
+  border-top-color: transparent;*/
+}
+
 .output-label {
   font-size: 0.75em;
   font-weight: bold;
@@ -440,10 +447,6 @@ figcaption {
   height: 1em;
   position: relative;
   width: 1em;
-}
-
-#annotation-upload[disabled] {
-  opacity: 1;
 }
 
 .output-result-classify {

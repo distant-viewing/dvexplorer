@@ -83,6 +83,18 @@ export default class DepthAnnotation extends Annotation {
     }
   }
 
+  async handleUrl(value) {
+    this.dataToDownload = {};
+
+    this.handleInput(
+      value,
+      value,
+      value,
+      0,
+      1,
+    );
+  }
+
   async handleInput(objUrl, caption, fname, index, inputLen) {
     const output = document.getElementById('annotation-output');
     const imageContainer = document.createElement('div');
@@ -107,22 +119,36 @@ export default class DepthAnnotation extends Annotation {
     output.appendChild(sp);
 
     img1.src = objUrl;
-    img2.src = objUrl;
-    await img1.decode();
+    //img2.src = objUrl;
+    
+    img1.onerror = () => {
+      this.buildOutput();
 
-    const aspRatio = img1.width / img1.height;
-    const conHeight = Math.min(616 / aspRatio, 500);
-    const conWidth = conHeight * aspRatio;
-    imageContainer.style.height = conHeight.toString() + 'px';
-    imageContainer.style.width = conWidth.toString() + 'px';
+      const output = document.getElementById('annotation-output');
+      const msg = document.createElement('p');
+      msg.innerHTML = 'Not able to load image from URL <b>' + objUrl + '</b>';
+      msg.innerHTML += ". Please try again with another input or example!"
+      output.appendChild(msg);
 
-    this.worker.postMessage({
-      type: 'pipeline',
-      image: img1.src,
-      fileName: fname,
-      index: index,
-      inputLen: inputLen,
-    });
+      this.handleError();
+    };
+
+    img1.onload = () => {
+
+      const aspRatio = img1.width / img1.height;
+      const conHeight = Math.min(616 / aspRatio, 500);
+      const conWidth = conHeight * aspRatio;
+      imageContainer.style.height = conHeight.toString() + 'px';
+      imageContainer.style.width = conWidth.toString() + 'px';
+
+      this.worker.postMessage({
+        type: 'pipeline',
+        image: img1.src,
+        fileName: fname,
+        index: index,
+        inputLen: inputLen,
+      });
+    }
   }
 
   handleOutput(dt) {
