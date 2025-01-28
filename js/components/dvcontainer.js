@@ -1,7 +1,7 @@
 import verticalmenu from '../components/verticalmenu.js'
 import annotationinfo from '../components/annotationinfo.js'
 
-const buildDvContainer = function(activeId, buildInner) {
+const buildDvContainer = function(activeId, buildInner, isRoot) {
   // create the container and append it to the body of the webpage
   const dvContainer = document.createElement('div');
   dvContainer.className = 'dv-container';
@@ -9,7 +9,7 @@ const buildDvContainer = function(activeId, buildInner) {
   document.body.appendChild(dvContainer);
 
   // add vertical menu (left component) + annotation info (middle component)
-  verticalmenu(activeId);
+  verticalmenu(activeId, isRoot);
   if (buildInner) { annotationinfo(); }
 
   // add the output container; it is built out by the annotation itself
@@ -21,6 +21,6 @@ const buildDvContainer = function(activeId, buildInner) {
   }
 }
 
-export default function dvcontainer(activeId, buildInner = true) {
-  buildDvContainer(activeId, buildInner);
+export default function dvcontainer(activeId, buildInner, isRoot) {
+  buildDvContainer(activeId, buildInner, isRoot);
 }

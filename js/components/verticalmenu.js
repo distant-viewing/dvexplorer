@@ -96,15 +96,22 @@ const buildVerticalMenu = function () {
 
 };
 
-export default function verticalmenu(activeId) {
+export default function verticalmenu(activeId, isRoot) {
   buildVerticalMenu();
 
   const activeLink = document.getElementById(activeId);
   activeLink.classList.add('is-active');
 
+  const path = isRoot ? "./pages/" : "../";
+  console.log(isRoot);
+
   const allLinks = [...document.getElementsByClassName('menu-link')];
   for (let i = 0; i < allLinks.length; i++) {
-    allLinks[i].href = '../' + allLinks[i].id;
+    if (allLinks[i].id === "welcome") {
+      allLinks[i].href = "/";
+    } else {
+      allLinks[i].href = path + allLinks[i].id;
+    }
   }
 }
 
