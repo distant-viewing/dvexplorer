@@ -6,12 +6,12 @@ import { RawImage } from '../extern/transformers.min.js';
 export default class ClassifyAnnotation extends Annotation {
   section = 'menu-image';
   name = 'classify';
-  title = '2.1 Image Classification';
+  title = '2.2 Image Classification';
   dtype = 'q8';
   task = 'image-classification';
   model = 'Xenova/resnet-50';
   itype = 'image';
-  pylink = 'https://distantviewing.org/dvscripts/2.1_classification.html';
+  pylink = 'https://distantviewing.org/dvscripts/2.2_classification.html';
   dataToDownload = {};
   exampleNames = null;
 

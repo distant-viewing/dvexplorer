@@ -6,12 +6,12 @@ import { RawImage } from '../extern/transformers.min.js';
 export default class SegmentAnnotation extends Annotation {
   section = 'menu-image';
   name = 'segment';
-  title = '2.4 Image Segmentation';
+  title = '2.5 Image Segmentation';
   dtype = 'q8';
   task = 'image-segmentation';
   model = 'Xenova/segformer-b0-finetuned-ade-512-512'; // Xenova/segformer_b2_clothes
   itype = 'image';
-  pylink = 'https://distantviewing.org/dvscripts/2.4_segment.html';
+  pylink = 'https://distantviewing.org/dvscripts/2.5_segment.html';
   dataToDownload = {};
   exampleNames = null;
 

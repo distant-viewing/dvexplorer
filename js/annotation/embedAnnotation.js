@@ -7,12 +7,12 @@ import { Tensor, matmul } from '../extern/transformers.min.js';
 export default class EmAnnotation extends Annotation {
   section = 'menu-image';
   name = 'embed';
-  title = '2.5 Embedding';
+  title = '2.6 Embedding';
   dtype = 'q8';
   task = 'image-feature-extraction';
   model = 'Xenova/vit-base-patch16-224-in21k';
   itype = 'image-corpus';
-  pylink = 'https://distantviewing.org/dvscripts/2.5_embed.html';
+  pylink = 'https://distantviewing.org/dvscripts/2.6_embed.html';
   dataToDownload = {};
   imageSet = [];
   imageUpload = {};

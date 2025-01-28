@@ -1,6 +1,20 @@
 import { pipeline, Pipeline, RawImage } from '../extern/transformers.min.js';
 
 const loadModel = async function (msg) {
+  if (msg.task === null) {
+    postMessage({
+      type: 'progress',
+      file: 'onnx',
+      progress: { status: 'ready', file: '.onnx', progress: 100 },
+    });
+    postMessage({
+      type: 'progress',
+      file: 'onnx',
+      progress: { status: 'progress', file: '.onnx', progress: 100 },
+    });
+    return;
+  }
+
   const device = 'wasm';
 
   const modelSettings = {
