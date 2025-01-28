@@ -124,16 +124,24 @@ export default class ClassifyAnnotation extends Annotation {
   }
 
   handleDownload() {
+
+    console.log(this.dataToDownload);
+
+    const csv = Object.entries(this.dataToDownload)
+      .map(([key, value]) => `"${key}","${value}"`)
+      .join("\n");
+
+    const csvWithHeaders = `"path","caption"\n${csv}`;
+
     document
       .getElementById('annotation-download')
       .addEventListener('click', () => {
-        const jsonString = JSON.stringify(this.dataToDownload);
-        const blob = new Blob([jsonString], { type: 'application/json' });
+        const blob = new Blob([csvWithHeaders], { type: 'text/csv;charset=utf-8' });
         const url = URL.createObjectURL(blob);
 
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = 'data.json';
+        link.download = 'data.csv';
         link.click();
         URL.revokeObjectURL(link.href);
       });

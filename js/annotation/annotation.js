@@ -57,12 +57,12 @@ const setupImageCorpus = function () {
 
 const setupVideo = function () {
   const finput = document.getElementById('file-input');
-  finput.accept = 'video/*';
+  finput.accept = 'video/*,audio/*';
   finput.webkitdirectory = false;
   finput.multiple = false;
 
   const uspan = document.getElementById('annotation-upload-span');
-  uspan.innerHTML = 'Upload<br />Video…';
+  uspan.innerHTML = 'Upload<br />A/V …';
 };
 
 export default class Annotation {

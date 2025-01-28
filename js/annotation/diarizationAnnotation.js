@@ -150,16 +150,28 @@ export default class DiarizationAnnotation extends Annotation {
   }
 
   handleDownload() {
+
+    const rows = [];
+
+    // Iterate over each key-value pair
+    Object.entries(this.dataToDownload).forEach(([path, segments]) => {
+      segments.forEach(({ id, start, end, confidence, label }) => {
+        rows.push([path, id, start, end, confidence, label]);
+      });
+    });
+
+    const headers = ["path", "id", "start", "stop", "confidence", "label"];
+    const csvWithHeaders = [headers, ...rows.map(row => row.map(value => `"${value}"`).join(","))].join("\n");
+
     document
       .getElementById('annotation-download')
       .addEventListener('click', () => {
-        const jsonString = JSON.stringify(this.dataToDownload);
-        const blob = new Blob([jsonString], { type: 'application/json' });
+        const blob = new Blob([csvWithHeaders], { type: 'text/csv;charset=utf-8' });
         const url = URL.createObjectURL(blob);
 
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = 'data.json';
+        link.download = 'data.csv';
         link.click();
         URL.revokeObjectURL(link.href);
       });

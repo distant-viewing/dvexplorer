@@ -120,16 +120,36 @@ export default class ObjectAnnotation extends Annotation {
   }
 
   handleDownload() {
+
+    // Prepare the CSV data
+    const rows = [];
+
+    // Iterate over each key-value pair
+    Object.entries(this.dataToDownload).forEach(([path, detections]) => {
+      if (detections.length === 0) {
+        // Add a row indicating no detections for this path
+        rows.push([path, "No detections", "", "", "", "", "", ""]);
+      } else {
+        detections.forEach(({ score, label, box }) => {
+          const { xmin, ymin, xmax, ymax } = box;
+          // Add a row for each detection
+          rows.push([path, label, score, xmin, ymin, xmax, ymax]);
+        });
+      }
+    });
+
+    const headers = ["path", "label", "score", "xmin", "ymin", "xmax", "ymax"];
+    const csvWithHeaders = [headers, ...rows.map(row => row.map(value => `"${value}"`).join(","))].join("\n");
+
     document
       .getElementById('annotation-download')
       .addEventListener('click', () => {
-        const jsonString = JSON.stringify(this.dataToDownload);
-        const blob = new Blob([jsonString], { type: 'application/json' });
+        const blob = new Blob([csvWithHeaders], { type: 'text/csv;charset=utf-8' });
         const url = URL.createObjectURL(blob);
 
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = 'data.json';
+        link.download = 'data.csv';
         link.click();
         URL.revokeObjectURL(link.href);
       });

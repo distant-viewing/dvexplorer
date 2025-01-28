@@ -229,6 +229,16 @@ export default class ShotboundaryAnnotation extends Annotation {
   handleOutput(dt) {}
 
   async handleDownload() {
+
+    // convert annotations to csv
+    const rows = [];
+    this.dataToDownload.shots.forEach(({ start, end, score }) => {
+      rows.push([start, end, score]);
+    });
+    const headers = ["start", "end", "score"];
+    const csvWithHeaders = [headers, ...rows.map(row => row.map(value => `"${value}"`).join(","))].join("\n");
+
+    // deal with the images
     let imgElems = [...document.getElementsByClassName('inner-image-img')];
     imgElems.pop();
     const oput = imgElems.map((e) => {
@@ -250,8 +260,7 @@ export default class ShotboundaryAnnotation extends Annotation {
       await zipWriter.add(`${millSec}.png`, new BlobReader(res[i]));
     }
 
-    const jsonString = JSON.stringify(this.dataToDownload);
-    await zipWriter.add(`data.json`, new TextReader(jsonString));
+    await zipWriter.add(`data.csv`, new TextReader(csvWithHeaders));
 
     await zipWriter.close();
     const zipFileBlob = await zipFileWriter.getData();

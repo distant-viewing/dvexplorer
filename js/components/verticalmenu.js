@@ -103,12 +103,11 @@ export default function verticalmenu(activeId, isRoot) {
   activeLink.classList.add('is-active');
 
   const path = isRoot ? "./pages/" : "../";
-  console.log(isRoot);
 
   const allLinks = [...document.getElementsByClassName('menu-link')];
   for (let i = 0; i < allLinks.length; i++) {
     if (allLinks[i].id === "welcome") {
-      allLinks[i].href = "/";
+      allLinks[i].href = "/dvexplorer";
     } else {
       allLinks[i].href = path + allLinks[i].id;
     }

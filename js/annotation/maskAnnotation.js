@@ -196,17 +196,29 @@ export default class ClassifyAnnotation extends Annotation {
   }
 
   handleDownload() {
+    const rows = [];
+    Object.entries(this.dataToDownload).forEach(([path, entries]) => {
+      entries.forEach(entry => {
+        const { input, output } = entry;
+        output.forEach(({ score, token, token_str, sequence }) => {
+          rows.push([path, input, score, token, token_str, sequence]);
+        });
+      });
+    });
+
+    const headers = ["path", "input", "score", "token_id", "token", "phrase"];
+    const csvWithHeaders = [headers, ...rows.map(row => row.map(value => `"${value}"`).join(","))].join("\n");
+
     document.getElementById('search-bar').disabled = false;
     document
       .getElementById('annotation-download')
       .addEventListener('click', () => {
-        const jsonString = JSON.stringify(this.dataToDownload);
-        const blob = new Blob([jsonString], { type: 'application/json' });
+        const blob = new Blob([csvWithHeaders], { type: 'text/csv;charset=utf-8' });
         const url = URL.createObjectURL(blob);
 
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = 'data.json';
+        link.download = 'data.csv';
         link.click();
         URL.revokeObjectURL(link.href);
       });
