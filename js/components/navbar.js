@@ -48,7 +48,7 @@ const buildNavBar = function () {
 
   // Add the SVG to the link
   const newImage = document.createElement('img');
-  newImage.src = "../../icon/owl3.png"
+  newImage.src = "/dvexplorer/icon/owl3.png"
   navHomeLink.appendChild(newImage);
 
   // Add text to the link
