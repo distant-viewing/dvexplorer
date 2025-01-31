@@ -1,4 +1,5 @@
 import Annotation from './annotation.js';
+import VideoFrameExtractor from '../utils/videoframeextractor.js'
 import { renderBox } from '../utils/tutils.js';
 
 import { RawImage } from '../extern/transformers.min.js';
@@ -72,6 +73,38 @@ export default class ClassifyAnnotation extends Annotation {
     }
   }
 
+  async handleUploadVideo(uploadInput) {
+    this.dataToDownload = {};
+
+    const vfe = new VideoFrameExtractor();
+    await vfe.handleFileSelect(uploadInput);
+    const imageArray = await vfe.getImageBlobUrls();
+
+    for (let i = 0; i < imageArray.length; i++) {
+      this.handleInput(
+        imageArray[i].url,
+        imageArray[i].title,
+        imageArray[i].title,
+        i,
+        imageArray.length,
+      );
+    }
+  }
+
+  async handleUrl(value) {
+    this.dataToDownload = {};
+    this.imageDataArray = [];
+    this.imageNameArray = [];
+    
+    this.handleInput(
+      value,
+      value,
+      value,
+      0,
+      1,
+    );
+  }
+
   async handleInput(objUrl, caption, fname, index, inputLen) {
     const output = document.getElementById('annotation-output');
     const imageContainer = document.createElement('div');
@@ -95,16 +128,31 @@ export default class ClassifyAnnotation extends Annotation {
 
     output.appendChild(sp);
     output.appendChild(spRes);
-    await img.decode();
 
-    this.worker.postMessage({
-      type: 'pipeline',
-      image: img.src,
-      modelOpts: { max_length: 30, num_beams: 4 },
-      fileName: fname,
-      index: index,
-      inputLen: inputLen,
-    });
+    console.log("?");
+
+    img.onerror = () => {
+      this.buildOutput();
+
+      const output = document.getElementById('annotation-output');
+      const msg = document.createElement('p');
+      msg.innerHTML = 'Not able to load image from URL <b>' + objUrl + '</b>';
+      msg.innerHTML += ". Please try again with another input or example!"
+      output.appendChild(msg);
+
+      this.handleError();
+    };
+
+    img.onload = () => {
+      this.worker.postMessage({
+        type: 'pipeline',
+        image: img.src,
+        modelOpts: { max_length: 30, num_beams: 4 },
+        fileName: fname,
+        index: index,
+        inputLen: inputLen,
+      });
+    };
   }
 
   handleOutput(dt) {
@@ -124,8 +172,6 @@ export default class ClassifyAnnotation extends Annotation {
   }
 
   handleDownload() {
-
-    console.log(this.dataToDownload);
 
     const csv = Object.entries(this.dataToDownload)
       .map(([key, value]) => `"${key}","${value}"`)

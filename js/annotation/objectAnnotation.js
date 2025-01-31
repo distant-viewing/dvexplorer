@@ -1,4 +1,5 @@
 import Annotation from './annotation.js';
+import VideoFrameExtractor from '../utils/videoframeextractor.js'
 import { renderBox } from '../utils/tutils.js';
 
 import { RawImage } from '../extern/transformers.min.js';
@@ -84,6 +85,24 @@ export default class ObjectAnnotation extends Annotation {
     );
   }
   
+  async handleUploadVideo(uploadInput) {
+    this.dataToDownload = {};
+
+    const vfe = new VideoFrameExtractor();
+    await vfe.handleFileSelect(uploadInput);
+    const imageArray = await vfe.getImageBlobUrls();
+
+    for (let i = 0; i < imageArray.length; i++) {
+      this.handleInput(
+        imageArray[i].url,
+        imageArray[i].title,
+        imageArray[i].title,
+        i,
+        imageArray.length,
+      );
+    }
+  }
+
   async handleInput(objUrl, caption, fname, index, inputLen) {
     const output = document.getElementById('annotation-output');
     const imageContainer = document.createElement('div');

@@ -597,6 +597,14 @@ figcaption {
   height: 100px !important;
 }
 
+#video-container {
+  border-top: 2px solid hsl(var(--bulma-success-h), var(--bulma-success-s), var(--bulma-success-l));
+}
+
+#video-upload-label {
+  font-size: 0.9em;
+}
+
 #time-label {
   position: relative;
 }

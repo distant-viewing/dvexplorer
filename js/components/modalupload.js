@@ -98,6 +98,65 @@ const buildModalUpload = function () {
   inputUrlContainer.appendChild(inputUrl);
   messageBody.appendChild(inputUrlContainer);
 
+  // Create the Video Upload
+  const videoDiv = document.createElement('div');
+  const videoBodyP = document.createElement('p');
+  const videoLabel = document.createElement('label');
+  const videoInput = document.createElement('input');
+
+  videoBodyP.className = "py-3";
+  videoBodyP.innerHTML = "Or, upload a local video file and we will extract frames at the selected regular time interval and process each individual frame";
+
+  videoDiv.id = 'video-container';
+  videoLabel.id = 'video-upload-label';
+  videoLabel.className = 'pb-3';
+  videoLabel.for = 'fps';
+  videoInput.type = 'number';
+  videoInput.id = 'video-frame-interval';
+  videoInput.min = 0.1;
+  videoInput.value = 5; 
+  videoLabel.innerHTML = 'Interval between frames (seconds) : '; 
+
+  const uploadVideoFieldset = document.createElement('fieldset');
+  uploadVideoFieldset.className = 'py-3';
+  uploadVideoFieldset.id = 'upload-video-file';
+  uploadVideoFieldset.disabled = false;
+
+  const fileVideoLabel = document.createElement('label');
+  fileVideoLabel.className = 'file-label';
+
+  const fileVideoInput = document.createElement('input');
+  fileVideoInput.className = 'file-input py-3';
+  fileVideoInput.id = 'file-video-input';
+  fileVideoInput.type = 'file';
+  fileVideoInput.accept = 'video/*';
+  fileVideoLabel.appendChild(fileVideoInput);
+
+  const fileVideoCtaSpan = document.createElement('span');
+  fileVideoCtaSpan.className = 'file-cta is-success';
+  fileVideoCtaSpan.id = 'file-video-cta-custom';
+
+  const uploadVideoIconSpan = document.createElement('span');
+  uploadVideoIconSpan.className = 'file-icon';
+  const uploadVideoIcon = document.createElement('i');
+  uploadVideoIcon.className = 'fas fa-file-arrow-up';
+  uploadVideoIconSpan.appendChild(uploadVideoIcon);
+  fileVideoCtaSpan.appendChild(uploadVideoIconSpan);
+
+  const uploadVideoTextSpan = document.createElement('span');
+  uploadVideoTextSpan.className = 'file-label is-small py-3';
+  uploadVideoTextSpan.id = 'annotation-video-upload-span';
+  uploadVideoTextSpan.innerHTML = 'Upload video file…';
+  fileVideoCtaSpan.appendChild(uploadVideoTextSpan);
+
+  fileVideoLabel.appendChild(fileVideoCtaSpan);
+  uploadVideoFieldset.appendChild(fileVideoLabel);
+
+  videoDiv.appendChild(videoBodyP);
+  videoDiv.appendChild(videoLabel).appendChild(videoInput);
+  videoDiv.appendChild(uploadVideoFieldset);
+  messageBody.appendChild(videoDiv);
+
   // Append the message body to the article
   article.appendChild(messageBody);
 

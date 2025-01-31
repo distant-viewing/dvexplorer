@@ -36,6 +36,9 @@ const setupText = function () {
 
   const urlInput = document.getElementById('url-input');
   urlInput.classList.add('is-hidden');
+
+  const videoUploadContainer = document.getElementById('video-container');
+  videoUploadContainer.classList.add('is-hidden');
 };
 
 const setupImage = function () {
@@ -52,6 +55,9 @@ const setupImage = function () {
 
   const urlInput = document.getElementById('url-input');
   urlInput.classList.remove('is-hidden');
+
+  const videoUploadContainer = document.getElementById('video-container');
+  videoUploadContainer.classList.remove('is-hidden');
 };
 
 const setupImageCorpus = function () {
@@ -68,6 +74,9 @@ const setupImageCorpus = function () {
 
   const urlInput = document.getElementById('url-input');
   urlInput.classList.add('is-hidden');
+
+  const videoUploadContainer = document.getElementById('video-container');
+  videoUploadContainer.classList.remove('is-hidden');
 };
 
 const setupVideo = function () {
@@ -84,6 +93,9 @@ const setupVideo = function () {
 
   const urlInput = document.getElementById('url-input');
   urlInput.classList.add('is-hidden');
+
+  const videoUploadContainer = document.getElementById('video-container');
+  videoUploadContainer.classList.add('is-hidden');
 };
 
 const setupAudioVideo = function () {
@@ -100,6 +112,9 @@ const setupAudioVideo = function () {
 
   const urlInput = document.getElementById('url-input');
   urlInput.classList.add('is-hidden');
+
+  const videoUploadContainer = document.getElementById('video-container');
+  videoUploadContainer.classList.add('is-hidden');
 };
 
 export default class Annotation {
@@ -119,6 +134,8 @@ export default class Annotation {
   handleDownload() {}
 
   handleExample() {}
+
+  handleUploadVideo() {}
 
   handleInput(objUrl, caption, fname, index, inputLen) {}
 
@@ -400,6 +417,14 @@ export default class Annotation {
       .addEventListener('change', (e) => {
         this.handleRunModel();
         this.handleUpload(e);
+        modalUpload.classList.remove('is-active');
+    });
+
+    document
+      .getElementById('file-video-input')
+      .addEventListener('change', (e) => {
+        this.handleRunModel();
+        this.handleUploadVideo(e);
         modalUpload.classList.remove('is-active');
     });
 
