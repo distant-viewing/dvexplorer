@@ -11,7 +11,7 @@ export default class SentimentAnnotation extends Annotation {
   task = 'sentiment-analysis';
   model = 'Xenova/distilbert-base-uncased-finetuned-sst-2-english';
   itype = 'text';
-  pylink = 'https://distantviewing.org/dvscripts/4.1_sentiment.html';
+  pylink = 'https://distantviewing.org/dvscripts/sentiment.html';
   dataToDownload = {};
   exampleNames = ['afi', 'sotu-text', 'amazon', 'macron-text'];
 

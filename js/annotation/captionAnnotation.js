@@ -12,7 +12,7 @@ export default class ClassifyAnnotation extends Annotation {
   task = 'image-to-text';
   model = 'Xenova/vit-gpt2-image-captioning';
   itype = 'image';
-  pylink = 'https://distantviewing.org/dvscripts/5.2_caption.html';
+  pylink = 'https://distantviewing.org/dvscripts/caption.html';
   dataToDownload = {};
   exampleNames = null;
 

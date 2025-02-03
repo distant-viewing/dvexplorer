@@ -19,7 +19,7 @@ export default class DepthAnnotation extends Annotation {
   task = 'depth-estimation';
   model = 'Xenova/depth-anything-base-hf';
   itype = 'image';
-  pylink = 'https://distantviewing.org/dvscripts/2.4_depth.html';
+  pylink = 'https://distantviewing.org/dvscripts/depth.html';
   dataToDownload = {};
   exampleNames = null;
 

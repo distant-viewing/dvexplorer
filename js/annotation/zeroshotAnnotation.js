@@ -13,7 +13,7 @@ export default class ZeroshotAnnotation extends Annotation {
   task = 'zero-shot-image-classification';
   model = 'Xenova/siglip-base-patch16-224';
   itype = 'image-corpus';
-  pylink = 'https://distantviewing.org/dvscripts/5.1_zeroshot.html';
+  pylink = 'https://distantviewing.org/dvscripts/zeroshot.html';
   dataToDownload = {};
   exampleNames = null;
   imageSet = [];

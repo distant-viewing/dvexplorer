@@ -9,7 +9,7 @@ export default class TranscriptionAnnotation extends Annotation {
   task = 'automatic-speech-recognition';
   model = 'Xenova/whisper-base';
   itype = 'audiovideo';
-  pylink = 'https://distantviewing.org/dvscripts/3.2_transcription.html';
+  pylink = 'https://distantviewing.org/dvscripts/transcription.html';
   dataToDownload = {};
   exampleNames = null;
 

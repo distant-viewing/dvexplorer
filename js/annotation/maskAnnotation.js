@@ -11,7 +11,7 @@ export default class ClassifyAnnotation extends Annotation {
   task = 'fill-mask';
   model = 'Xenova/bert-base-cased';
   itype = 'text';
-  pylink = 'https://distantviewing.org/dvscripts/4.4_mask.html';
+  pylink = 'https://distantviewing.org/dvscripts/mask.html';
   dataToDownload = {};
   exampleNames = ['afimask'];
 

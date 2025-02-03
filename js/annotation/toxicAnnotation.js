@@ -11,7 +11,7 @@ export default class ToxicAnnotation extends Annotation {
   task = 'sentiment-analysis';
   model = 'Xenova/toxic-bert';
   itype = 'text';
-  pylink = 'https://distantviewing.org/dvscripts/4.3_comment.html';
+  pylink = 'https://distantviewing.org/dvscripts/comment.html';
   dataToDownload = {};
   exampleNames = ['afi', 'sotu-text', 'amazon', 'macron-text'];
 

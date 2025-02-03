@@ -12,7 +12,7 @@ export default class SegmentAnnotation extends Annotation {
   task = 'image-segmentation';
   model = 'Xenova/segformer-b0-finetuned-ade-512-512'; // Xenova/segformer_b2_clothes
   itype = 'image';
-  pylink = 'https://distantviewing.org/dvscripts/2.5_segment.html';
+  pylink = 'https://distantviewing.org/dvscripts/segment.html';
   dataToDownload = {};
   exampleNames = null;
 

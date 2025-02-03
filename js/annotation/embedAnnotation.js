@@ -13,7 +13,7 @@ export default class EmAnnotation extends Annotation {
   task = 'image-feature-extraction';
   model = 'Xenova/vit-base-patch16-224-in21k';
   itype = 'image-corpus';
-  pylink = 'https://distantviewing.org/dvscripts/2.6_embed.html';
+  pylink = 'https://distantviewing.org/dvscripts/embed.html';
   dataToDownload = {};
   imageSet = [];
   imageUpload = {};

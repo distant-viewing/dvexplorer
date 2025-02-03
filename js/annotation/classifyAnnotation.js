@@ -12,7 +12,7 @@ export default class ClassifyAnnotation extends Annotation {
   task = 'image-classification';
   model = 'Xenova/resnet-50';
   itype = 'image';
-  pylink = 'https://distantviewing.org/dvscripts/2.2_classification.html';
+  pylink = 'https://distantviewing.org/dvscripts/classification.html';
   dataToDownload = {};
   exampleNames = null;
 

@@ -12,7 +12,7 @@ export default class ObjectAnnotation extends Annotation {
   task = 'object-detection';
   model = 'Xenova/detr-resnet-50';
   itype = 'image';
-  pylink = 'https://distantviewing.org/dvscripts/2.3_object.html';
+  pylink = 'https://distantviewing.org/dvscripts/object.html';
   dataToDownload = {};
   exampleNames = null;
 
