@@ -14,7 +14,7 @@ export default class ColorAnnotation extends Annotation {
   task = null;
   model = null;
   itype = 'image-corpus';
-  pylink = 'https://distantviewing.org/dvscripts/color.html';
+  pylink = 'https://distantviewing.org/dvscripts/tutorial-digital-images.html';
   dataToDownload = {};
   imageSet = [];
   exampleNames = null;

@@ -20,7 +20,7 @@ export default class MetricsAnnotation extends Annotation {
   task = null;
   model = null;
   itype = 'image-corpus';
-  pylink = 'https://distantviewing.org/dvscripts/metrics.html';
+  pylink = 'https://distantviewing.org/dvscripts/tutorial-digital-images.html';
   dataToDownload = {};
   imageSet = [];
   exampleNames = null;
