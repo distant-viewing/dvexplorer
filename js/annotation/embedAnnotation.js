@@ -8,7 +8,7 @@ import { Tensor, matmul } from '../extern/transformers.min.js';
 export default class EmAnnotation extends Annotation {
   section = 'menu-image';
   name = 'embed';
-  title = '2.6 Embedding';
+  title = '2.7 Embedding';
   dtype = 'q8';
   task = 'image-feature-extraction';
   model = 'Xenova/vit-base-patch16-224-in21k';

@@ -14,7 +14,7 @@ import {
 export default class DepthAnnotation extends Annotation {
   section = 'menu-image';
   name = 'depth';
-  title = '2.4 Depth Estimation';
+  title = '2.5 Depth Estimation';
   dtype = 'q8';
   task = 'depth-estimation';
   model = 'Xenova/depth-anything-base-hf';

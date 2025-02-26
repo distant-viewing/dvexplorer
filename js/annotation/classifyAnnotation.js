@@ -7,7 +7,7 @@ import { RawImage } from '../extern/transformers.min.js';
 export default class ClassifyAnnotation extends Annotation {
   section = 'menu-image';
   name = 'classify';
-  title = '2.2 Image Classification';
+  title = '2.3 Image Classification';
   dtype = 'q8';
   task = 'image-classification';
   model = 'Xenova/resnet-50';

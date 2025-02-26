@@ -1,0 +1,443 @@
+[
+  {
+    "hex": "#eadbc0",
+    "name": "32001 blanc",
+    "r": 234,
+    "g": 219,
+    "b": 192
+  },
+  {
+    "hex": "#5e6061",
+    "name": "32010 gris foncé 31",
+    "r": 94,
+    "g": 96,
+    "b": 97
+  },
+  {
+    "hex": "#929494",
+    "name": "32011 gris 31",
+    "r": 146,
+    "g": 148,
+    "b": 148
+  },
+  {
+    "hex": "#a7a8a5",
+    "name": "32012 gris moyen",
+    "r": 167,
+    "g": 168,
+    "b": 165
+  },
+  {
+    "hex": "#bcbbb6",
+    "name": "32013 gris clair 31",
+    "r": 188,
+    "g": 187,
+    "b": 182
+  },
+  {
+    "hex": "#4d6aa8",
+    "name": "32020 bleu outremer 31",
+    "r": 77,
+    "g": 106,
+    "b": 168
+  },
+  {
+    "hex": "#8fabc9",
+    "name": "32021 outremer moyen",
+    "r": 143,
+    "g": 171,
+    "b": 201
+  },
+  {
+    "hex": "#abbdc8",
+    "name": "32022 outremer clair",
+    "r": 171,
+    "g": 189,
+    "b": 200
+  },
+  {
+    "hex": "#b6c6ce",
+    "name": "32023 outremer pâle",
+    "r": 182,
+    "g": 198,
+    "b": 206
+  },
+  {
+    "hex": "#d9e1dd",
+    "name": "32024 outremer gris",
+    "r": 217,
+    "g": 225,
+    "b": 221
+  },
+  {
+    "hex": "#3e6e90",
+    "name": "32030 bleu céruléen 31",
+    "r": 62,
+    "g": 110,
+    "b": 144
+  },
+  {
+    "hex": "#679dae",
+    "name": "32031 céruléen vif",
+    "r": 103,
+    "g": 157,
+    "b": 174
+  },
+  {
+    "hex": "#8ab5ba",
+    "name": "32032 céruléen moyen",
+    "r": 138,
+    "g": 181,
+    "b": 186
+  },
+  {
+    "hex": "#a8c4c1",
+    "name": "32033 céruléen clair",
+    "r": 168,
+    "g": 196,
+    "b": 193
+  },
+  {
+    "hex": "#c6d5cc",
+    "name": "32034 céruléen pâle",
+    "r": 198,
+    "g": 213,
+    "b": 204
+  },
+  {
+    "hex": "#406e58",
+    "name": "32040 vert anglais",
+    "r": 64,
+    "g": 110,
+    "b": 88
+  },
+  {
+    "hex": "#91afa1",
+    "name": "32041 vert anglais clair",
+    "r": 145,
+    "g": 175,
+    "b": 161
+  },
+  {
+    "hex": "#becbb7",
+    "name": "32042 vert anglais pâle",
+    "r": 190,
+    "g": 203,
+    "b": 183
+  },
+  {
+    "hex": "#3e6f42",
+    "name": "32050 vert foncé",
+    "r": 62,
+    "g": 111,
+    "b": 66
+  },
+  {
+    "hex": "#7fa25a",
+    "name": "32051 vert 31",
+    "r": 127,
+    "g": 162,
+    "b": 90
+  },
+  {
+    "hex": "#abc17a",
+    "name": "32052 vert clair",
+    "r": 171,
+    "g": 193,
+    "b": 122
+  },
+  {
+    "hex": "#c4d39b",
+    "name": "32053 vert jaune clair",
+    "r": 196,
+    "g": 211,
+    "b": 155
+  },
+  {
+    "hex": "#eacfa6",
+    "name": "32060 ocre",
+    "r": 234,
+    "g": 207,
+    "b": 166
+  },
+  {
+    "hex": "#d46c40",
+    "name": "32080 orange",
+    "r": 212,
+    "g": 108,
+    "b": 64
+  },
+  {
+    "hex": "#dc8d67",
+    "name": "32081 orange clair",
+    "r": 220,
+    "g": 141,
+    "b": 103
+  },
+  {
+    "hex": "#eacfb9",
+    "name": "32082 orange pâle",
+    "r": 234,
+    "g": 207,
+    "b": 185
+  },
+  {
+    "hex": "#9b3738",
+    "name": "32090 rouge vermillon 31",
+    "r": 155,
+    "g": 55,
+    "b": 56
+  },
+  {
+    "hex": "#e6cdbf",
+    "name": "32091 rose pâle",
+    "r": 230,
+    "g": 205,
+    "b": 191
+  },
+  {
+    "hex": "#8f3a43",
+    "name": "32100 rouge carmin",
+    "r": 143,
+    "g": 58,
+    "b": 67
+  },
+  {
+    "hex": "#943a4d",
+    "name": "32101 rouge rubia",
+    "r": 148,
+    "g": 58,
+    "b": 77
+  },
+  {
+    "hex": "#d6afa6",
+    "name": "32102 rose clair",
+    "r": 214,
+    "g": 175,
+    "b": 166
+  },
+  {
+    "hex": "#8b4d3e",
+    "name": "32110 l'ocre rouge",
+    "r": 139,
+    "g": 77,
+    "b": 62
+  },
+  {
+    "hex": "#cd9886",
+    "name": "32111 l'ocre rouge moyen",
+    "r": 205,
+    "g": 152,
+    "b": 134
+  },
+  {
+    "hex": "#dbbeaa",
+    "name": "32112 l'ocre rouge clair",
+    "r": 219,
+    "g": 190,
+    "b": 170
+  },
+  {
+    "hex": "#68443c",
+    "name": "32120 terre sienne brûlée 31",
+    "r": 104,
+    "g": 68,
+    "b": 60
+  },
+  {
+    "hex": "#b67b66",
+    "name": "32121 terre sienne brique",
+    "r": 182,
+    "g": 123,
+    "b": 102
+  },
+  {
+    "hex": "#d8b29a",
+    "name": "32122 terre sienne claire 31",
+    "r": 216,
+    "g": 178,
+    "b": 154
+  },
+  {
+    "hex": "#e2cbb5",
+    "name": "32123 terre sienne pâle",
+    "r": 226,
+    "g": 203,
+    "b": 181
+  },
+  {
+    "hex": "#4c423d",
+    "name": "32130 terre d'ombre brûlée 31",
+    "r": 76,
+    "g": 66,
+    "b": 61
+  },
+  {
+    "hex": "#b7a392",
+    "name": "32131 ombre brûlée claire",
+    "r": 183,
+    "g": 163,
+    "b": 146
+  },
+  {
+    "hex": "#5a5550",
+    "name": "32140 ombre naturelle 31",
+    "r": 90,
+    "g": 85,
+    "b": 80
+  },
+  {
+    "hex": "#928a7e",
+    "name": "32141 ombre naturelle moyenne",
+    "r": 146,
+    "g": 138,
+    "b": 126
+  },
+  {
+    "hex": "#b7ac9d",
+    "name": "32142 ombre naturelle claire",
+    "r": 183,
+    "g": 172,
+    "b": 157
+  },
+  {
+    "hex": "#ac443a",
+    "name": "4320A rouge vermillon 59",
+    "r": 172,
+    "g": 68,
+    "b": 58
+  },
+  {
+    "hex": "#eae4d7",
+    "name": "4320B blanc ivoire",
+    "r": 234,
+    "g": 228,
+    "b": 215
+  },
+  {
+    "hex": "#dba3af",
+    "name": "4320C rose vif",
+    "r": 219,
+    "g": 163,
+    "b": 175
+  },
+  {
+    "hex": "#744438",
+    "name": "4320D terre sienne brûlée 59",
+    "r": 116,
+    "g": 68,
+    "b": 56
+  },
+  {
+    "hex": "#3a3b3b",
+    "name": "4320E noir d'ivoire",
+    "r": 58,
+    "g": 59,
+    "b": 59
+  },
+  {
+    "hex": "#b8a136",
+    "name": "4320F vert olive vif",
+    "r": 184,
+    "g": 161,
+    "b": 54
+  },
+  {
+    "hex": "#428f70",
+    "name": "4320G vert 59",
+    "r": 66,
+    "g": 143,
+    "b": 112
+  },
+  {
+    "hex": "#81868b",
+    "name": "4320H gris 59",
+    "r": 129,
+    "g": 134,
+    "b": 139
+  },
+  {
+    "hex": "#403c3a",
+    "name": "4320J terre d'ombre brûlée 59",
+    "r": 64,
+    "g": 60,
+    "b": 58
+  },
+  {
+    "hex": "#3957a5",
+    "name": "4320K bleu outremer 59",
+    "r": 57,
+    "g": 87,
+    "b": 165
+  },
+  {
+    "hex": "#dbb07f",
+    "name": "4320L ocre jaune clair",
+    "r": 219,
+    "g": 176,
+    "b": 127
+  },
+  {
+    "hex": "#74393b",
+    "name": "4320M le rubis",
+    "r": 116,
+    "g": 57,
+    "b": 59
+  },
+  {
+    "hex": "#7aa7cb",
+    "name": "4320N bleu céruléen 59",
+    "r": 122,
+    "g": 167,
+    "b": 203
+  },
+  {
+    "hex": "#92969a",
+    "name": "4320O gris clair 59",
+    "r": 146,
+    "g": 150,
+    "b": 154
+  },
+  {
+    "hex": "#ddbf99",
+    "name": "4320P terre sienne claire 59",
+    "r": 221,
+    "g": 191,
+    "b": 153
+  },
+  {
+    "hex": "#45423e",
+    "name": "4320R ombre naturelle 59",
+    "r": 69,
+    "g": 66,
+    "b": 62
+  },
+  {
+    "hex": "#c45e3a",
+    "name": "4320S orange vif",
+    "r": 196,
+    "g": 94,
+    "b": 58
+  },
+  {
+    "hex": "#313d6b",
+    "name": "4320T bleu outremer foncé",
+    "r": 49,
+    "g": 61,
+    "b": 107
+  },
+  {
+    "hex": "#60646a",
+    "name": "4320U gris foncé 59",
+    "r": 96,
+    "g": 100,
+    "b": 106
+  },
+  {
+    "hex": "#f2bb1d",
+    "name": "4320W le jaune vif",
+    "r": 242,
+    "g": 187,
+    "b": 29
+  }
+]

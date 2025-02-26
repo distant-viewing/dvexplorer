@@ -20,7 +20,8 @@ template_text <- read_lines("templates/template_text.js")
 page_anno <- c(
   "caption",  "classify", "depth", "diarization", "embed",
   "mask",  "object", "segment", "sentiment", "shotboundary",
-  "stars",  "toxic", "transcription", "zeroshot", "color"
+  "stars",  "toxic", "transcription", "zeroshot", "metrics",
+  "color"
 )
 page_text <- c("citation", "moreinfo", "started")
 page_index <- "welcome"

@@ -66,12 +66,13 @@ const buildVerticalMenu = function () {
 
   // Create the "Image" section
   createMenuSection('fas fa-image', 'Image', 'menu-image', [
-    { id: 'color', text: '2.1 Color + Complexity' },
-    { id: 'classify', text: '2.2 Image Classification' },
-    { id: 'object', text: '2.3 Object Detection' },
-    { id: 'depth', text: '2.4 Depth Estimation' },
-    { id: 'segment', text: '2.5 Image Segmentation' },
-    { id: 'embed', text: '2.6 Embedding' },
+    { id: 'metrics', text: '2.1 Brightness + Hue' },
+    { id: 'color', text: '2.2 Color' },
+    { id: 'classify', text: '2.3 Image Classification' },
+    { id: 'object', text: '2.4 Object Detection' },
+    { id: 'depth', text: '2.5 Depth Estimation' },
+    { id: 'segment', text: '2.6 Image Segmentation' },
+    { id: 'embed', text: '2.7 Embedding' },
   ]);
 
   // Create the "Video + Audio" section

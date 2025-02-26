@@ -608,3 +608,17 @@ figcaption {
 #time-label {
   position: relative;
 }
+
+.palette-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.palette-grid-item {
+  height: 30px;
+  width: 30px;
+  margin: 2px;
+  border: 1px solid black;
+  cursor: pointer;
+}

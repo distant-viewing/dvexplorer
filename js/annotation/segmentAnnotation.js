@@ -7,7 +7,7 @@ import { RawImage } from '../extern/transformers.min.js';
 export default class SegmentAnnotation extends Annotation {
   section = 'menu-image';
   name = 'segment';
-  title = '2.5 Image Segmentation';
+  title = '2.6 Image Segmentation';
   dtype = 'q8';
   task = 'image-segmentation';
   model = 'Xenova/segformer-b0-finetuned-ade-512-512'; // Xenova/segformer_b2_clothes

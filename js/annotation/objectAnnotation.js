@@ -7,7 +7,7 @@ import { RawImage } from '../extern/transformers.min.js';
 export default class ObjectAnnotation extends Annotation {
   section = 'menu-image';
   name = 'object';
-  title = '2.3 Object Detection';
+  title = '2.4 Object Detection';
   dtype = 'q8';
   task = 'object-detection';
   model = 'Xenova/detr-resnet-50';
