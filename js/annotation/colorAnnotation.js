@@ -395,7 +395,7 @@ const calcColors = function (img) {
 const loadColorScheme = function() {
   const dropdown = document.getElementById('select-lang');
   const scheme = dropdown.value;
-  return getData('/data/' + scheme + '.json');
+  return getData('../../data/' + scheme + '.json');
 }
 
 const colorSchemeS = {
