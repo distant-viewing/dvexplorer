@@ -1,148 +1,228 @@
+/**
+ * Constants for common CSS classes and element IDs
+ */
+const CLASSES = {
+  LOADING: 'is-loading',
+  SUCCESS: 'is-success',
+  LIGHT: 'is-light',
+  HIDDEN: 'is-hidden'
+};
+
+const ELEMENTS = {
+  LOAD_BUTTON: 'annotation-load',
+  EXAMPLE_BUTTON: 'annotation-example',
+  UPLOAD_BUTTON: 'annotation-upload',
+  DOWNLOAD_BUTTON: 'annotation-download',
+  PROGRESS_LOAD: 'file-progress-load',
+  PROGRESS_RUN: 'file-progress-run',
+  TIME_LABEL: 'time-label',
+  FILE_INPUT: 'file-input',
+  VIDEO_INPUT: 'file-video-input',
+  OPTIONS: 'annotation-options',
+  UPLOAD_SPAN: 'annotation-upload-span',
+  INSTRUCTIONS: 'upload-instructions',
+  URL_INPUT: 'url-input',
+  VIDEO_CONTAINER: 'video-container',
+  TITLE: 'annotation-title',
+  SPAN_MORE_INFO: 'span-more-info',
+  PYTHON_LINK: 'python-link',
+  DESCRIPTION: 'annotation-description',
+  MODAL_CONTENT: 'modal-info-content',
+  EXAMPLE_BODY: 'example-body',
+  OUTPUT: 'annotation-output'
+};
+
+/**
+ * Setup configurations for different input types
+ */
+const SETUP_CONFIGS = {
+  text: {
+    accept: '.txt',
+    webkitdirectory: false,
+    multiple: false,
+    uploadSpanText: 'Upload text file…',
+    instructionsText: 'Select a text file to upload, with one entry on each line.',
+    showUrlInput: false,
+    showVideoContainer: false
+  },
+  image: {
+    accept: 'image/*',
+    webkitdirectory: false,
+    multiple: true,
+    uploadSpanText: 'Upload image file(s)…',
+    instructionsText: 'Select one or more image files to upload.',
+    showUrlInput: true,
+    showVideoContainer: true
+  },
+  'image-corpus': {
+    accept: '',
+    webkitdirectory: false,
+    multiple: true,
+    uploadSpanText: 'Upload image file(s)…',
+    instructionsText: 'Select one or more image files to upload.',
+    showUrlInput: false,
+    showVideoContainer: true
+  },
+  video: {
+    accept: 'video/*',
+    webkitdirectory: false,
+    multiple: false,
+    uploadSpanText: 'Upload video file…',
+    instructionsText: 'Select a video file to upload.',
+    showUrlInput: false,
+    showVideoContainer: false
+  },
+  audiovideo: {
+    accept: 'video/*,audio/*',
+    webkitdirectory: false,
+    multiple: false,
+    uploadSpanText: 'Upload video or audio file…',
+    instructionsText: 'Select an video or audio file to upload.',
+    showUrlInput: false,
+    showVideoContainer: false
+  }
+};
+
 import { getData } from '../utils/utils.js';
+import DOMUtils from '../utils/domutils.js';
 
-const handleReset = function () {
-  document.getElementById('annotation-options').innerHTML = '';
-  document.getElementById('file-progress-load').value = 0;
-  document.getElementById('file-progress-run').value = 0;
-  document.getElementById('annotation-load').disabled = false;
-  document.getElementById('annotation-load').classList.add('is-success');
-  document.getElementById('annotation-load').classList.add('is-light');
-  document.getElementById('annotation-example').disabled = true;
-  document.getElementById('annotation-example').classList.remove('is-light');
-  document.getElementById('annotation-example').classList.remove('is-loading');
-  document.getElementById('annotation-upload').disabled = true;
-  document.getElementById('annotation-upload').classList.remove('is-light');
-  document.getElementById('annotation-upload').classList.remove('is-loading');
-  document.getElementById('annotation-download').disabled = true;
-  document.getElementById('annotation-download').classList.remove('is-light');
-
-  document.getElementById('annotation-example').classList.remove('is-success');
-  document
-    .getElementById('annotation-download')
-    .classList.remove('is-success');
+/**
+ * Resets the UI state
+ */
+const handleReset = function() {
+  DOMUtils.setElementHTML(ELEMENTS.OPTIONS, '');
+  DOMUtils.getElement(ELEMENTS.PROGRESS_LOAD).value = 0;
+  DOMUtils.getElement(ELEMENTS.PROGRESS_RUN).value = 0;
+  
+  // Reset load button
+  DOMUtils.setElementEnabled(ELEMENTS.LOAD_BUTTON, true);
+  DOMUtils.toggleElementClass(ELEMENTS.LOAD_BUTTON, CLASSES.SUCCESS, true);
+  DOMUtils.toggleElementClass(ELEMENTS.LOAD_BUTTON, CLASSES.LIGHT, true);
+  
+  // Reset example button
+  DOMUtils.setElementEnabled(ELEMENTS.EXAMPLE_BUTTON, false);
+  DOMUtils.toggleElementClass(ELEMENTS.EXAMPLE_BUTTON, CLASSES.LIGHT, false);
+  DOMUtils.toggleElementClass(ELEMENTS.EXAMPLE_BUTTON, CLASSES.LOADING, false);
+  DOMUtils.toggleElementClass(ELEMENTS.EXAMPLE_BUTTON, CLASSES.SUCCESS, false);
+  
+  // Reset upload button
+  DOMUtils.setElementEnabled(ELEMENTS.UPLOAD_BUTTON, false);
+  DOMUtils.toggleElementClass(ELEMENTS.UPLOAD_BUTTON, CLASSES.LIGHT, false);
+  DOMUtils.toggleElementClass(ELEMENTS.UPLOAD_BUTTON, CLASSES.LOADING, false);
+  
+  // Reset download button
+  DOMUtils.setElementEnabled(ELEMENTS.DOWNLOAD_BUTTON, false);
+  DOMUtils.toggleElementClass(ELEMENTS.DOWNLOAD_BUTTON, CLASSES.LIGHT, false);
+  DOMUtils.toggleElementClass(ELEMENTS.DOWNLOAD_BUTTON, CLASSES.SUCCESS, false);
 };
 
-const setupText = function () {
-  const finput = document.getElementById('file-input');
-  finput.accept = '.txt';
-  finput.webkitdirectory = false;
-  finput.multiple = false;
-
-  const uploadSpan = document.getElementById('annotation-upload-span');
-  uploadSpan.innerHTML = 'Upload text file…';
-
-  const uploadInstructions = document.getElementById('upload-instructions');
-  uploadInstructions.innerHTML = 'Select a text file to upload, with one entry on each line.';
-
-  const urlInput = document.getElementById('url-input');
-  urlInput.classList.add('is-hidden');
-
-  const videoUploadContainer = document.getElementById('video-container');
-  videoUploadContainer.classList.add('is-hidden');
+/**
+ * Setup interface for a specific input type
+ * @param {string} type - Input type (text, image, video, etc.)
+ */
+const setupInterface = function(type) {
+  const config = SETUP_CONFIGS[type];
+  if (!config) {
+    console.error(`Unknown input type: ${type}`);
+    return;
+  }
+  
+  const fileInput = DOMUtils.getElement(ELEMENTS.FILE_INPUT);
+  
+  if (config.accept) {
+    fileInput.accept = config.accept;
+  } else {
+    DOMUtils.removeElementAttribute(ELEMENTS.FILE_INPUT, 'accept');
+  }
+  
+  fileInput.webkitdirectory = config.webkitdirectory;
+  fileInput.multiple = config.multiple;
+  
+  DOMUtils.setElementHTML(ELEMENTS.UPLOAD_SPAN, config.uploadSpanText);
+  DOMUtils.setElementHTML(ELEMENTS.INSTRUCTIONS, config.instructionsText);
+  
+  // Toggle visibility of URL input and video container
+  DOMUtils.toggleElementClass(ELEMENTS.URL_INPUT, CLASSES.HIDDEN, !config.showUrlInput);
+  DOMUtils.toggleElementClass(ELEMENTS.VIDEO_CONTAINER, CLASSES.HIDDEN, !config.showVideoContainer);
 };
 
-const setupImage = function () {
-  const finput = document.getElementById('file-input');
-  finput.accept = 'image/*';
-  finput.webkitdirectory = false;
-  finput.multiple = true;
-
-  const uploadSpan = document.getElementById('annotation-upload-span');
-  uploadSpan.innerHTML = 'Upload image file(s)…';
-
-  const uploadInstructions = document.getElementById('upload-instructions');
-  uploadInstructions.innerHTML = 'Select one or more image files to upload.';
-
-  const urlInput = document.getElementById('url-input');
-  urlInput.classList.remove('is-hidden');
-
-  const videoUploadContainer = document.getElementById('video-container');
-  videoUploadContainer.classList.remove('is-hidden');
-};
-
-const setupImageCorpus = function () {
-  const finput = document.getElementById('file-input');
-  finput.removeAttribute('accept');
-  finput.webkitdirectory = false;
-  finput.multiple = true;
-
-  const uploadSpan = document.getElementById('annotation-upload-span');
-  uploadSpan.innerHTML = 'Upload image file(s)…';
-
-  const uploadInstructions = document.getElementById('upload-instructions');
-  uploadInstructions.innerHTML = 'Select one or more image files to upload.';
-
-  const urlInput = document.getElementById('url-input');
-  urlInput.classList.add('is-hidden');
-
-  const videoUploadContainer = document.getElementById('video-container');
-  videoUploadContainer.classList.remove('is-hidden');
-};
-
-const setupVideo = function () {
-  const finput = document.getElementById('file-input');
-  finput.accept = 'video/*';
-  finput.webkitdirectory = false;
-  finput.multiple = false;
-
-  const uploadSpan = document.getElementById('annotation-upload-span');
-  uploadSpan.innerHTML = 'Upload video file…';
-
-  const uploadInstructions = document.getElementById('upload-instructions');
-  uploadInstructions.innerHTML = 'Select a video file to upload.';
-
-  const urlInput = document.getElementById('url-input');
-  urlInput.classList.add('is-hidden');
-
-  const videoUploadContainer = document.getElementById('video-container');
-  videoUploadContainer.classList.add('is-hidden');
-};
-
-const setupAudioVideo = function () {
-  const finput = document.getElementById('file-input');
-  finput.accept = 'video/*,audio/*';
-  finput.webkitdirectory = false;
-  finput.multiple = false;
-
-  const uploadSpan = document.getElementById('annotation-upload-span');
-  uploadSpan.innerHTML = 'Upload video or audio file…';
-
-  const uploadInstructions = document.getElementById('upload-instructions');
-  uploadInstructions.innerHTML = 'Select an video or audio file to upload.';
-
-  const urlInput = document.getElementById('url-input');
-  urlInput.classList.add('is-hidden');
-
-  const videoUploadContainer = document.getElementById('video-container');
-  videoUploadContainer.classList.add('is-hidden');
-};
-
+/**
+ * Base class for annotations
+ */
 export default class Annotation {
+  /**
+   * Initialize class properties
+   */
   setup() {
     this.worker = null;
     this.outputCnt = 0;
+    this.startTime = 0;
+    this.endTime = 0;
   }
 
+  /**
+   * Build output container - to be implemented by subclasses
+   */
   buildOutput() {}
 
+  /**
+   * Handle file upload - to be implemented by subclasses
+   * @param {Event} uploadInput - Upload input event
+   */
   handleUpload(uploadInput) {}
 
+  /**
+   * Handle URL input - to be implemented by subclasses
+   * @param {string} url - URL to process
+   */
   handleUrl(url) {}
 
-  handleOutput(dt) {}
+  /**
+   * Handle output data - to be implemented by subclasses
+   * @param {Object} data - Output data
+   */
+  handleOutput(data) {}
 
+  /**
+   * Handle download action - to be implemented by subclasses
+   */
   handleDownload() {}
 
+  /**
+   * Handle example selection - to be implemented by subclasses
+   * @param {Object} example - Example data
+   */
   handleExample() {}
 
+  /**
+   * Handle video upload - to be implemented by subclasses
+   * @param {Event} uploadInput - Upload input event
+   */
   handleUploadVideo() {}
 
+  /**
+   * Handle input processing - to be implemented by subclasses
+   * @param {string} objUrl - Object URL
+   * @param {string} caption - Caption
+   * @param {string} fname - File name
+   * @param {number} index - Index
+   * @param {number} inputLen - Input length
+   */
   handleInput(objUrl, caption, fname, index, inputLen) {}
 
+  /**
+   * Actions to perform after model is loaded - to be implemented by subclasses
+   */
   afterLoad() {}
 
+  /**
+   * Start web workers - to be implemented by subclasses
+   */
   startWorkers() {}
 
+  /**
+   * Terminate workers and reset UI
+   */
   terminate() {
     handleReset();
 
@@ -151,37 +231,46 @@ export default class Annotation {
     }
   }
 
+  /**
+   * Set up message handlers for the worker
+   */
   handleOnMessage() {
-    this.worker.onmessage = (e) => {
-      if (e.data.type === 'progress') {
-        this.handleLoad(e.data);
-      } else if (e.data.type === 'output') {
+    this.worker.onmessage = (event) => {
+      const data = event.data;
+      
+      if (data.type === 'progress') {
+        this.handleLoad(data);
+      } else if (data.type === 'output') {
         this.outputCnt += 1;
-        this.handleOutput(e.data);
+        this.handleOutput(data);
 
-        const proportionFinished = this.outputCnt / e.data.input.inputLen;
-        document.getElementById('file-progress-run').value = 100 * (proportionFinished);
+        const proportionFinished = this.outputCnt / data.input.inputLen;
+        DOMUtils.getElement(ELEMENTS.PROGRESS_RUN).value = 100 * proportionFinished;
 
         const curTime = new Date().getTime() / 1000;
         const curDuration = (curTime - this.startTime);
-        const estimatedTime = (curDuration / this.outputCnt) * (e.data.input.inputLen - this.outputCnt); 
+        const estimatedTime = (curDuration / this.outputCnt) * (data.input.inputLen - this.outputCnt); 
 
-        const timeLabel = document.getElementById('time-label');
-        timeLabel.innerHTML = `Estimated time remaining: <strong>${estimatedTime.toFixed(1)}</strong> seconds.`;
+        DOMUtils.setElementHTML(
+          ELEMENTS.TIME_LABEL, 
+          `Estimated time remaining: <strong>${estimatedTime.toFixed(1)}</strong> seconds.`
+        );
 
-
-        if (this.outputCnt >= e.data.input.inputLen) {
+        if (this.outputCnt >= data.input.inputLen) {
           this.handleDownload();
           this.handleResult();
         }
-      } else if (e.data.type === 'output-text') {
-        this.handleOutput(e.data);
+      } else if (data.type === 'output-text') {
+        this.handleOutput(data);
       }
     };
   }
 
+  /**
+   * Load the model
+   */
   loadModel() {
-    document.getElementById('annotation-load').classList.add('is-loading');
+    DOMUtils.toggleElementClass(ELEMENTS.LOAD_BUTTON, CLASSES.LOADING, true);
 
     this.startWorkers();
     this.handleOnMessage();
@@ -194,255 +283,306 @@ export default class Annotation {
     });
   }
 
-  handleLoad(dt) {
-    if (dt.progress.status === 'ready') {
+  /**
+   * Handle loading progress
+   * @param {Object} data - Progress data
+   */
+  handleLoad(data) {
+    if (data.progress.status === 'ready') {
       this.handleReady();
       this.afterLoad();
     }
+    
     if (
-      dt.progress.status === 'progress' &&
-      dt.progress.file !== undefined &&
-      dt.progress.file.slice(-4) === 'onnx'
+      data.progress.status === 'progress' &&
+      data.progress.file !== undefined &&
+      data.progress.file.slice(-4) === 'onnx'
     ) {
-      document.getElementById('file-progress-load').value =
-        dt.progress.progress;
+      DOMUtils.getElement(ELEMENTS.PROGRESS_LOAD).value = data.progress.progress;
     }
   }
 
+  /**
+   * Handle model ready state
+   */
   handleReady() {
-    document.getElementById('annotation-load').classList.remove('is-loading');
-    document.getElementById('annotation-load').classList.remove('is-success');
-    document.getElementById('annotation-load').classList.remove('is-light');
-    document.getElementById('annotation-load').disabled = true;
-    document.getElementById('annotation-example').disabled = false;
-    document.getElementById('annotation-example').classList.add('is-light');
-    document.getElementById('annotation-example').classList.add('is-success');
-    document.getElementById('annotation-upload').disabled = false;
-    document.getElementById('annotation-upload').classList.add('is-light');
-    document.getElementById('annotation-upload').classList.add('is-success');
+    // Update load button
+    DOMUtils.toggleElementClass(ELEMENTS.LOAD_BUTTON, CLASSES.LOADING, false);
+    DOMUtils.toggleElementClass(ELEMENTS.LOAD_BUTTON, CLASSES.SUCCESS, false);
+    DOMUtils.toggleElementClass(ELEMENTS.LOAD_BUTTON, CLASSES.LIGHT, false);
+    DOMUtils.setElementEnabled(ELEMENTS.LOAD_BUTTON, false);
+    
+    // Update example button
+    DOMUtils.setElementEnabled(ELEMENTS.EXAMPLE_BUTTON, true);
+    DOMUtils.toggleElementClass(ELEMENTS.EXAMPLE_BUTTON, CLASSES.LIGHT, true);
+    DOMUtils.toggleElementClass(ELEMENTS.EXAMPLE_BUTTON, CLASSES.SUCCESS, true);
+    
+    // Update upload button
+    DOMUtils.setElementEnabled(ELEMENTS.UPLOAD_BUTTON, true);
+    DOMUtils.toggleElementClass(ELEMENTS.UPLOAD_BUTTON, CLASSES.LIGHT, true);
+    DOMUtils.toggleElementClass(ELEMENTS.UPLOAD_BUTTON, CLASSES.SUCCESS, true);
   }
 
+  /**
+   * Handle model execution
+   */
   handleRunModel() {
     this.handleRunning();
     this.outputCnt = 0;
     this.buildOutput();
   }
 
+  /**
+   * Create example items
+   * @param {HTMLElement} modalExample - Example modal element
+   */
   makeExamples(modalExample) {
-    getData('../../info/examples.json').then((dt) => {
-      const exampleBody = document.getElementById('example-body');
-      exampleBody.innerHTML = '';
+    getData('../../info/examples.json')
+      .then((data) => {
+        const exampleBody = DOMUtils.getElement(ELEMENTS.EXAMPLE_BODY);
+        exampleBody.innerHTML = '';
+        
+        // Create document fragment for better performance
+        const fragment = document.createDocumentFragment();
 
-      let itype2 = (this.itype === 'image-corpus') ? 'image' : this.itype;
-      itype2 = (this.itype === 'audiovideo') ? 'video' : itype2;
+        // Determine the input type to filter examples
+        let inputType = (this.itype === 'image-corpus') ? 'image' : this.itype;
+        inputType = (this.itype === 'audiovideo') ? 'video' : inputType;
 
-      let dtFilter = dt;
-      if (this.exampleNames !== null) {
-        dtFilter = this.exampleNames.reduce((obj, key) => {
-          if (key in dtFilter) {
-            obj[key] = dtFilter[key];
-          }
-          return obj;
-        }, {});
-      }
-
-      for (const [key, value] of Object.entries(dtFilter)) {
-        if (value['type'] === itype2) {
-          const article = document.createElement('article');
-          article.className = 'media';
-          const figure = document.createElement('figure');
-          figure.className = 'media-left';
-          const p = document.createElement('p');
-          p.className = 'image is-128x128';
-          const img = document.createElement('img');
-          img.src = value.thm;
-          article.appendChild(figure).appendChild(p).appendChild(img);
-
-          const divMedia = document.createElement('div');
-          divMedia.className = 'media-content';
-          const divContent = document.createElement('div');
-          divContent.className = 'content';
-          const pEx = document.createElement('p');
-          pEx.className = 'example-par';
-          pEx.innerHTML = value.title + '<br />' + value.description;
-          article.appendChild(divMedia).appendChild(divContent).appendChild(pEx);
-
-          const divButton = document.createElement('div');
-          divButton.className = 'buttons';
-          const button = document.createElement('button');
-          button.className = 'button is-small is-success btn-use-it';
-          button.innerHTML = 'Use It';
-          divContent.appendChild(divButton).appendChild(button);
-
-          button.addEventListener('click', (e) => {
-            this.handleRunModel();
-            this.handleExample(value.short);
-            modalExample.classList.remove('is-active');
-          });
-
-          if ('long' in value) {
-            const buttonLong = document.createElement('button');
-            buttonLong.className = 'button is-small is-success btn-use-it';
-            buttonLong.innerHTML = 'Use It (long)';
-            divButton.appendChild(buttonLong);
-            buttonLong.addEventListener('click', (e) => {
-              this.handleRunModel();
-              this.handleExample(value.long);
-              modalExample.classList.remove('is-active');
-            });
-          }
-
-          const aExplore = document.createElement('a');
-          aExplore.href = value.link;
-          aExplore.target = '_blank';
-          aExplore.rel = 'noopener noreferrer';
-          const buttonExplore = document.createElement('button');
-          buttonExplore.className = 'button is-small is-success is-light';
-          buttonExplore.innerHTML = 'Explore the Collection';
-          divButton.appendChild(aExplore).appendChild(buttonExplore);
-
-          exampleBody.appendChild(article);
+        // Filter data if exampleNames is provided
+        let filteredData = data;
+        if (this.exampleNames !== null) {
+          filteredData = this.exampleNames.reduce((obj, key) => {
+            if (key in filteredData) {
+              obj[key] = filteredData[key];
+            }
+            return obj;
+          }, {});
         }
-      }
-    });
+
+        // Loop through and create example elements
+        for (const [key, value] of Object.entries(filteredData)) {
+          if (value.type === inputType) {
+            const article = this.createExampleElement(value, modalExample);
+            fragment.appendChild(article);
+          }
+        }
+        
+        exampleBody.appendChild(fragment);
+      })
+      .catch(error => {
+        console.error('Error loading examples:', error);
+      });
   }
 
+  /**
+   * Create a single example element
+   * @param {Object} example - Example data
+   * @param {HTMLElement} modalExample - Example modal element
+   * @returns {HTMLElement} - Created article element
+   */
+  createExampleElement(example, modalExample) {
+    // Create article container
+    const article = DOMUtils.createElement('article');
+    article.className = 'media';
+    
+    // Create image figure
+    const figure = DOMUtils.createElement('figure');
+    figure.className = 'media-left';
+    const p = DOMUtils.createElement('p');
+    p.className = 'image is-128x128';
+    const img = DOMUtils.createElement('img');
+    img.src = example.thm;
+    article.appendChild(figure).appendChild(p).appendChild(img);
+
+    // Create content section
+    const divMedia = DOMUtils.createElement('div');
+    divMedia.className = 'media-content';
+    const divContent = DOMUtils.createElement('div');
+    divContent.className = 'content';
+    const pEx = DOMUtils.createElement('p');
+    pEx.className = 'example-par';
+    pEx.innerHTML = example.title + '<br />' + example.description;
+    article.appendChild(divMedia).appendChild(divContent).appendChild(pEx);
+
+    // Create buttons container
+    const divButton = DOMUtils.createElement('div');
+    divButton.className = 'buttons';
+    divContent.appendChild(divButton);
+    
+    // Add "Use It" button
+    const button = DOMUtils.createElement('button');
+    button.className = 'button is-small is-success btn-use-it';
+    button.innerHTML = 'Use It';
+    divButton.appendChild(button);
+
+    button.addEventListener('click', () => {
+      this.handleRunModel();
+      this.handleExample(example.short);
+      modalExample.classList.remove('is-active');
+    });
+
+    // Add "Use It (long)" button if long example exists
+    if ('long' in example) {
+      const buttonLong = DOMUtils.createElement('button');
+      buttonLong.className = 'button is-small is-success btn-use-it';
+      buttonLong.innerHTML = 'Use It (long)';
+      divButton.appendChild(buttonLong);
+      
+      buttonLong.addEventListener('click', () => {
+        this.handleRunModel();
+        this.handleExample(example.long);
+        modalExample.classList.remove('is-active');
+      });
+    }
+
+    // Add "Explore the Collection" button
+    const aExplore = DOMUtils.createElement('a');
+    aExplore.href = example.link;
+    aExplore.target = '_blank';
+    aExplore.rel = 'noopener noreferrer';
+    const buttonExplore = DOMUtils.createElement('button');
+    buttonExplore.className = 'button is-small is-success is-light';
+    buttonExplore.innerHTML = 'Explore the Collection';
+    aExplore.appendChild(buttonExplore);
+    divButton.appendChild(aExplore);
+
+    return article;
+  }
+
+  /**
+   * Handle running state
+   */
   handleRunning() {
-    const timeLabel = document.getElementById('time-label');
-    timeLabel.innerHTML = '';
+    DOMUtils.setElementHTML(ELEMENTS.TIME_LABEL, '');
 
     this.startTime = new Date().getTime() / 1000;
-    const fileProgress = document.getElementById('file-progress-run');
-    fileProgress.value = 0;
+    DOMUtils.getElement(ELEMENTS.PROGRESS_RUN).value = 0;
 
-    document.getElementById('annotation-example').classList.add('is-loading');
-    document.getElementById('annotation-upload').classList.add('is-loading');
-    document.getElementById('annotation-download').classList.add('is-loading');
-    document.getElementById('annotation-download').classList.add('is-light');
-    document.getElementById('annotation-download').classList.add('is-success');
+    // Update button states
+    DOMUtils.toggleElementClass(ELEMENTS.EXAMPLE_BUTTON, CLASSES.LOADING, true);
+    DOMUtils.toggleElementClass(ELEMENTS.UPLOAD_BUTTON, CLASSES.LOADING, true);
+    DOMUtils.toggleElementClass(ELEMENTS.DOWNLOAD_BUTTON, CLASSES.LOADING, true);
+    DOMUtils.toggleElementClass(ELEMENTS.DOWNLOAD_BUTTON, CLASSES.LIGHT, true);
+    DOMUtils.toggleElementClass(ELEMENTS.DOWNLOAD_BUTTON, CLASSES.SUCCESS, true);
 
-    document.getElementById('annotation-example').disabled = true;
-    document.getElementById('annotation-upload').disabled = true;
-    document.getElementById('annotation-download').disabled = true;
+    DOMUtils.setElementEnabled(ELEMENTS.EXAMPLE_BUTTON, false);
+    DOMUtils.setElementEnabled(ELEMENTS.UPLOAD_BUTTON, false);
+    DOMUtils.setElementEnabled(ELEMENTS.DOWNLOAD_BUTTON, false);
   }
 
-  handleError () {
+  /**
+   * Handle errors
+   */
+  handleError() {
     this.handleResult();
-    document.getElementById('annotation-download').disabled = true;
-    document.getElementById('annotation-download').classList.remove('is-success');
+    DOMUtils.setElementEnabled(ELEMENTS.DOWNLOAD_BUTTON, false);
+    DOMUtils.toggleElementClass(ELEMENTS.DOWNLOAD_BUTTON, CLASSES.SUCCESS, false);
   }
 
+  /**
+   * Handle completion
+   */
   handleResult() {
     this.endTime = new Date().getTime() / 1000;
 
-    const timeLabel = document.getElementById('time-label');
     const timeDuration = (this.endTime - this.startTime).toFixed(1);
-    timeLabel.innerHTML = `Finished in <strong>${timeDuration}</strong> seconds.`;
+    DOMUtils.setElementHTML(
+      ELEMENTS.TIME_LABEL,
+      `Finished in <strong>${timeDuration}</strong> seconds.`
+    );
 
-    document.getElementById('annotation-example').disabled = false;
-    document.getElementById('annotation-upload').disabled = false;
-
-    document.getElementById('annotation-download').disabled = false;
-    document.getElementById('annotation-download').classList.add('is-success');
-    document.getElementById('annotation-download').classList.add('is-light');
-    document.getElementById('annotation-example').classList.remove('is-loading');
-    document.getElementById('annotation-upload').classList.remove('is-loading');
-    document.getElementById('annotation-download').classList.remove('is-loading');
+    // Re-enable buttons
+    DOMUtils.setElementEnabled(ELEMENTS.EXAMPLE_BUTTON, true);
+    DOMUtils.setElementEnabled(ELEMENTS.UPLOAD_BUTTON, true);
+    DOMUtils.setElementEnabled(ELEMENTS.DOWNLOAD_BUTTON, true);
+    
+    // Update button states
+    DOMUtils.toggleElementClass(ELEMENTS.DOWNLOAD_BUTTON, CLASSES.SUCCESS, true);
+    DOMUtils.toggleElementClass(ELEMENTS.DOWNLOAD_BUTTON, CLASSES.LIGHT, true);
+    DOMUtils.toggleElementClass(ELEMENTS.EXAMPLE_BUTTON, CLASSES.LOADING, false);
+    DOMUtils.toggleElementClass(ELEMENTS.UPLOAD_BUTTON, CLASSES.LOADING, false);
+    DOMUtils.toggleElementClass(ELEMENTS.DOWNLOAD_BUTTON, CLASSES.LOADING, false);
   }
 
+  /**
+   * Run the annotation
+   */
   run() {
-    document.getElementById('annotation-title').innerHTML = this.title;
-    document.getElementById('span-more-info').innerHTML = this.title;
-    document.getElementById('python-link').href = this.pylink;
+    try {
+      // Set title and description
+      DOMUtils.setElementHTML(ELEMENTS.TITLE, this.title);
+      DOMUtils.setElementHTML(ELEMENTS.SPAN_MORE_INFO, this.title);
+      DOMUtils.getElement(ELEMENTS.PYTHON_LINK).href = this.pylink;
 
-    // ensure that we are starting with a fresh version of the page
-    this.terminate();
-    this.buildOutput();
+      // Ensure we start with a fresh page
+      this.terminate();
+      this.buildOutput();
 
-    // Load longer description of the model
-    getData('../../info/' + this.name + '.json').then((dt) => {
-      document.getElementById('annotation-description').innerHTML = dt.short;
-      document.getElementById('modal-info-content').innerHTML = dt.long;
-    });
+      // Load model description
+      getData(`../../info/${this.name}.json`)
+        .then(data => {
+          DOMUtils.setElementHTML(ELEMENTS.DESCRIPTION, data.short);
+          DOMUtils.setElementHTML(ELEMENTS.MODAL_CONTENT, data.long);
+        })
+        .catch(error => {
+          console.error('Error loading description:', error);
+        });
 
-    // setup elements based on the itype (video or image)
-    if (this.itype === 'image') {
-      setupImage();
-    } else if (this.itype === 'image-corpus') {
-      setupImageCorpus();
-    } else if (this.itype === 'text') {
-      setupText();
-    } else if (this.itype === 'audiovideo') {
-      setupAudioVideo();
-    }else if (this.itype === 'video') {
-      setupVideo();
-    }
+      // Set up interface based on input type
+      setupInterface(this.itype);
 
-    // This removes all existing event listeners on these two nodes;
-    // otherwise it will keep adding more listeners even if they are copies
-    // see: https://stackoverflow.com/questions/4386300
-    const annotationLoad = document.getElementById('annotation-load');
-    const annotationExample = document.getElementById('annotation-example');
-    const fileInput = document.getElementById('annotation-upload');
-    annotationLoad.replaceWith(annotationLoad.cloneNode(true));
-    annotationExample.replaceWith(annotationExample.cloneNode(true));
-    fileInput.replaceWith(fileInput.cloneNode(true));
+      // Clone elements to remove existing event listeners
+      const annotationLoad = DOMUtils.replaceElementWithClone(ELEMENTS.LOAD_BUTTON);
+      const annotationExample = DOMUtils.replaceElementWithClone(ELEMENTS.EXAMPLE_BUTTON);
+      const fileInput = DOMUtils.replaceElementWithClone(ELEMENTS.UPLOAD_BUTTON);
+      
+      // Replace "Use It" buttons
+      const useItButtons = DOMUtils.getElementsByClass('btn-use-it');
+      for (let i = 0; i < useItButtons.length; i++) {
+        useItButtons[i].replaceWith(useItButtons[i].cloneNode(true));
+      }
 
-    let btnArray = [...document.getElementsByClassName('btn-use-it')];
-    for (let i = 0; i < btnArray.length; i++) {
-      btnArray[i].replaceWith(btnArray[i].cloneNode(true));
-    }
+      // Get modal elements
+      const modalExample = DOMUtils.getElement('modal-example');
+      const modalUpload = DOMUtils.getElement('modal-upload');
 
-    // NOTE: cannot reuse objects above (i.e., annotationLoad) because
-    // they point to the previous versions of the nodes before cloning
-    const modalExample = document.getElementById('modal-example');
-    const modalUpload = document.getElementById('modal-upload');
-
-    document
-      .getElementById('annotation-load')
-      .addEventListener('click', () => {
+      // Set up event listeners
+      DOMUtils.getElement(ELEMENTS.LOAD_BUTTON).addEventListener('click', () => {
         this.loadModel();
       });
 
-    document
-      .getElementById('annotation-example')
-      .addEventListener('click', () => {
+      DOMUtils.getElement(ELEMENTS.EXAMPLE_BUTTON).addEventListener('click', () => {
         modalExample.classList.add('is-active');
       });
 
-    this.makeExamples(modalExample);
+      this.makeExamples(modalExample);
 
-    document
-      .getElementById('file-input')
-      .addEventListener('change', (e) => {
+      DOMUtils.getElement(ELEMENTS.FILE_INPUT).addEventListener('change', (event) => {
         this.handleRunModel();
-        this.handleUpload(e);
+        this.handleUpload(event);
         modalUpload.classList.remove('is-active');
-    });
+      });
 
-    document
-      .getElementById('file-video-input')
-      .addEventListener('change', (e) => {
+      DOMUtils.getElement(ELEMENTS.VIDEO_INPUT).addEventListener('change', (event) => {
         this.handleRunModel();
-        this.handleUploadVideo(e);
+        this.handleUploadVideo(event);
         modalUpload.classList.remove('is-active');
-    });
+      });
 
-    document
-      .getElementById('annotation-upload')
-      .addEventListener('click', () => {
+      DOMUtils.getElement(ELEMENTS.UPLOAD_BUTTON).addEventListener('click', () => {
         modalUpload.classList.add('is-active');
       });
 
-    document
-      .getElementById('url-input')
-      .addEventListener('keypress', (e) => {
-        if (e.key === "Enter") {
+      DOMUtils.getElement(ELEMENTS.URL_INPUT).addEventListener('keypress', (event) => {
+        if (event.key === "Enter") {
           this.handleRunModel();
-          this.handleUrl(document.getElementById('url-input').value);
+          this.handleUrl(DOMUtils.getElement(ELEMENTS.URL_INPUT).value);
           modalUpload.classList.remove('is-active');          
         }
-    });
-    
+      });
+    } catch (error) {
+      console.error('Error running annotation:', error);
+    }
   }
 }
