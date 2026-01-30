@@ -177,6 +177,7 @@ export default class MetricsAnnotation extends Annotation {
       index: index,
       img: objUrl,
       name: caption,
+      path: fname,
       metrics: metrics,
     });
 
@@ -203,7 +204,7 @@ export default class MetricsAnnotation extends Annotation {
     for (let i = 0; i < this.imageSet.length; i++) {
       const m = this.imageSet[i].metrics;
       rows.push([
-        this.imageSet[i].img,
+        this.imageSet[i].path,
         m.avgBrightness,
         m.avgSaturation,
         m.avgDiagDiff,

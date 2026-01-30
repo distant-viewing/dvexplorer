@@ -154,6 +154,7 @@ export default class ColorAnnotation extends Annotation {
       index: index,
       img: objUrl,
       name: caption,
+      path: fname,
       metrics: dataColors,
     });
 
@@ -250,7 +251,7 @@ export default class ColorAnnotation extends Annotation {
       const m = this.imageSet[i].metrics;
       for (let j = 0; j < colorScheme.length; j++) {
         rows.push([
-          this.imageSet[i].img,
+          this.imageSet[i].path,
           colorScheme[j].hex,
           colorScheme[j].name,
           m[j]
